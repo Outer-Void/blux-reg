@@ -3,7 +3,7 @@
 
 ## **blux-reg/plan.md** (BLG integration plan)
 
-```markdown
+
 # blux-reg / BLG Integration Plan
 
 ## v0.1 — Baseline
