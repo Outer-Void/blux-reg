@@ -30,3 +30,18 @@ bin/blux-reg keygen
 # Add your first manifest
 bin/blux-reg add-manifest manifests/first.yaml
 ```
+
+## Hooks (BLG Integration)
+
+Patch-diff signing: call after each patch-diff
+
+Event logging: call on first_start, auto-start, TUI/legacy events
+
+See scripts/hooks/after_patch_apply.sh and scripts/hooks/log_event.sh for examples.
+
+## License
+
+MIT
+
+
+---
