@@ -1,47 +1,69 @@
-# blux-reg
+# BLUX-Reg
 
-**Portable, auditable registry + signing/audit chain for BLUX projects**
+**Identity and trust backbone for the BLUX ecosystem.**
 
-blux-reg is a local-first registry that lets you:
+BLUX-Reg now unifies project validation, plugin signing, and user verification
+into a local-first workflow powered by modern cryptography. It couples
+Ed25519 keys with Argon2-protected passphrases and records every trust event in
+append-only JSONL ledgers under `~/blux-reg/registry/`, ensuring compatibility
+with BLUX-Quantum and BLUX-Guard stakeholders.
 
-- Generate cryptographic keys (ed25519 / RSA)
-- Sign manifests and patch-diffs
-- Maintain an append-only audit chain (`audit.log`)
-- Wire into any BLUX project (BLG or standalone)
+## Highlights
 
-## Features
+- 🛡️ **Role-specific keys** – generate project, plugin, and user keypairs with
+  Ed25519, protected by Argon2 passphrases.
+- 📓 **Append-only audit ledgers** – JSON Lines registries for keys, artifacts,
+  and revocations, each hashed into a tamper-evident chain.
+- 🔐 **Offline trust** – signatures include their public keys and ledger
+  membership proofs so artifacts can be validated without network access.
+- ♻️ **Revocable identities** – append revocation records that invalidate keys
+  across the ecosystem.
+- 🤝 **BLUX-Quantum & BLUX-Guard ready** – compatibility data is embedded in
+  every ledger record for downstream tooling.
 
-- CLI-based (`bin/blux-reg`)
-- Audit chaining (`prev_audit_sha256` verification)
-- Manifest-based system: all patches, events, and installed components are logged
-- Easily integrated into BLUX Lite GOLD via hooks
-- Portable across any BLUX project
-
-## Installation
+## Getting started
 
 ```bash
-# Clone or move your code
-git clone <repo-url> ~/code/blux-reg
-cd ~/code/blux-reg
+# Initialise directories and ledgers
+bin/blux-reg init
 
-# Initialize keys (default: ~/.config/blux-reg/keys)
-bin/blux-reg keygen
+# Create a project key (prompts for a new passphrase)
+bin/blux-reg keys create my-project project
 
-# Add your first manifest
-bin/blux-reg add-manifest manifests/first.yaml
+# List and export keys
+bin/blux-reg keys list
+bin/blux-reg keys export my-project --key-type project
+
+# Sign an artifact (manifest, plugin bundle, release archive, etc.)
+bin/blux-reg sign path/to/artifact.zip my-project project "release"
+
+# Verify offline – uses the saved signature JSON + registry audit
+bin/blux-reg verify path/to/artifact.zip
+
+# Revoke a compromised key
+bin/blux-reg keys revoke my-project --reason "compromised" --revoker trust-board
+
+# Inspect ledger integrity
+bin/blux-reg audit artifacts
 ```
 
-## Hooks (BLG Integration)
+Signature files are written to `~/blux-reg/signatures/` and include the
+payload, signature, and public key to enable air-gapped verification. Every
+operation appends to the appropriate ledger under `~/blux-reg/registry/` which
+can be replicated or inspected independently.
 
-Patch-diff signing: call after each patch-diff
+## Directory layout
 
-Event logging: call on first_start, auto-start, TUI/legacy events
-
-See scripts/hooks/after_patch_apply.sh and scripts/hooks/log_event.sh for examples.
+```
+~/blux-reg/
+├── registry/
+│   ├── keys.jsonl        # key issuance events
+│   ├── artifacts.jsonl   # signed artifacts + compatibility metadata
+│   └── revocations.jsonl # key revocation log
+├── signatures/           # detached signature bundles (.sig.json)
+└── manifests/, bin/, …   # optional project-specific files
+```
 
 ## License
 
 MIT
-
-
----

@@ -1,37 +1,26 @@
-
 ---
 
-## **blux-reg/plan.md** (BLG integration plan)
+## **blux-reg/plan.md** (Governance backbone milestones)
 
+# BLUX-Reg Roadmap
 
-# blux-reg / BLG Integration Plan
+## v1.0 — Identity Backbone
+- [x] Ed25519 key management with Argon2 passphrase protection
+- [x] JSONL append-only ledgers for keys, artifacts, and revocations
+- [x] Offline verification workflow with detached signatures
+- [x] Revocation pipeline compatible with BLUX-Quantum and BLUX-Guard
 
-## v0.1 — Baseline
-- [x] CLI: `keygen`, `add-manifest`, `verify-line`
-- [x] Audit chain (SHA256 prev pointers)
-- [x] Local storage: `~/.config/blux-reg/keys`, `manifests/`, `audit.log`
+## v1.1 — Ecosystem Integrations
+- [ ] Federation sync tooling for replicating ledgers
+- [ ] Trust policy authoring kit (policy-as-code)
+- [ ] Quantum attestation bridges
 
-## v0.1.1
-- [ ] Sign arbitrary payloads
-- [ ] ed25519 key option
-- [ ] CLI improvements, verbose / debug
+## v1.2 — Developer Experience
+- [ ] Python API for programmatic signing and verification
+- [ ] Rich TUI for identity lifecycle operations
+- [ ] Automated rotation policies and scheduled attestations
 
-## v0.2
-- [ ] Install flow: `~/.local/blux/components`
-- [ ] Capability tags / metadata
-- [ ] Auto-versioning of manifests
-
-## v0.3
-- [ ] HTTP serve mode for remote verification
-- [ ] How-to doc for remote verify
-
-## v0.4 — BLG hooks
-- [ ] Patch-diff hook integration
-- [ ] Launcher event logging hooks
-- [ ] Optional auto-sign for components
-
-## v1.0 — Governance-ready
-- [ ] Full manifest spec (YAML schema)
-- [ ] Key rotation + ed25519 rotation
-- [ ] Test suite, CI/CD, hardening
-- [ ] Publish interoperability spec
+## v2.0 — Multi-tenant Governance
+- [ ] Distributed quorum approvals for high-risk actions
+- [ ] Ledger anchoring to external transparency logs
+- [ ] Automated guard-rail enforcement via BLUX-Guard policy engine
