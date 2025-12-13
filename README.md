@@ -39,9 +39,14 @@ Event logging: call on first_start, auto-start, TUI/legacy events
 
 See scripts/hooks/after_patch_apply.sh and scripts/hooks/log_event.sh for examples.
 
-## License
+## Licensing
 
-MIT
+This project is dual-licensed:
+
+- **Open-source use:** Apache License 2.0. You may use, modify, and distribute the software under the terms of [LICENSE-APACHE](LICENSE-APACHE), which includes patent grants and notice requirements.
+- **Commercial use:** A separate commercial license is required for embedding, redistribution, or other commercial exploitation. See [LICENSE-COMMERCIAL](LICENSE-COMMERCIAL) and contact the maintainer at theoutervoid@outlook.com to obtain terms.
+
+Refer to the [NOTICE](NOTICE) file for attribution details. For guidance on when a commercial license is needed, see [COMMERCIAL.md](COMMERCIAL.md).
 
 
 ---
