@@ -1,72 +1,69 @@
-# blux-reg
+# BLUX-Reg
 
-Local-first signing, verification, and append-only auditing for BLUX (Lite / Commander / Quantum / Guard / Doctrine) demos.
+**Identity and trust backbone for the BLUX ecosystem.**
+
+BLUX-Reg now unifies project validation, plugin signing, and user verification
+into a local-first workflow powered by modern cryptography. It couples
+Ed25519 keys with Argon2-protected passphrases and records every trust event in
+append-only JSONL ledgers under `~/blux-reg/registry/`, ensuring compatibility
+with BLUX-Quantum and BLUX-Guard stakeholders.
 
 ## Highlights
-- Ed25519 key management with import/export and stable fingerprints
-- Deterministic artifact manifests (JSON) and verification
-- Append-only JSONL ledger with tamper-evident hash chain
-- CLI entrypoint `blux-reg` (non-interactive by default)
-- Works on Linux, macOS, and Termux with no network access required
 
-## Installation
+- 🛡️ **Role-specific keys** – generate project, plugin, and user keypairs with
+  Ed25519, protected by Argon2 passphrases.
+- 📓 **Append-only audit ledgers** – JSON Lines registries for keys, artifacts,
+  and revocations, each hashed into a tamper-evident chain.
+- 🔐 **Offline trust** – signatures include their public keys and ledger
+  membership proofs so artifacts can be validated without network access.
+- ♻️ **Revocable identities** – append revocation records that invalidate keys
+  across the ecosystem.
+- 🤝 **BLUX-Quantum & BLUX-Guard ready** – compatibility data is embedded in
+  every ledger record for downstream tooling.
 
-```bash
-python -m pip install --upgrade pip
-pip install -e .
-```
-
-## Quickstart
-
-```bash
-# initialize local state
-blux-reg init
-
-# create a demo key
-blux-reg keygen --name demo
-
-# sign a file
-echo "hello" > /tmp/example.txt
-blux-reg sign /tmp/example.txt --key-name demo
-
-# verify the manifest that was emitted next to the file
-blux-reg verify /tmp/example.txt.blux-manifest.json
-
-# inspect the audit chain
-blux-reg audit tail
-blux-reg audit verify-chain
-```
-
-## CLI reference
-- `blux-reg status [--json]`
-- `blux-reg keygen [--name NAME] [--force]`
-- `blux-reg key list`
-- `blux-reg key export --name NAME [--public/--private] [--output FILE]`
-- `blux-reg key import PATH [--name NAME]`
-- `blux-reg sign <artifact> [--key-name NAME] [--output FILE]`
-- `blux-reg verify <manifest>`
-- `blux-reg audit add-event "message" [--actor FINGERPRINT]`
-- `blux-reg audit tail [-n N] [--json]`
-- `blux-reg audit verify-chain`
-
-See [`docs/CONTRACT.md`](docs/CONTRACT.md) for the stable schemas and path layout.
-
-## Integration notes (BLUX Lite / Commander)
-- Prefer `BLUX_REG_CONFIG_DIR` to isolate per-project state in CI or demos.
-- `blux-reg status --json` provides machine-readable health (key count, ledger size, last hash).
-- A signed manifest includes `artifact_path`, `artifact_sha256`, `key_fingerprint`, and a base64 signature; verification recomputes all fields.
-- The ledger is JSONL and append-only: `prev_hash` must match the prior `entry_hash` or `audit verify-chain` will fail.
-
-## Demo script
-Run the fast start-to-finish demo:
+## Getting started
 
 ```bash
-./scripts/demo_unified_reg.sh
+# Initialise directories and ledgers
+bin/blux-reg init
+
+# Create a project key (prompts for a new passphrase)
+bin/blux-reg keys create my-project project
+
+# List and export keys
+bin/blux-reg keys list
+bin/blux-reg keys export my-project --key-type project
+
+# Sign an artifact (manifest, plugin bundle, release archive, etc.)
+bin/blux-reg sign path/to/artifact.zip my-project project "release"
+
+# Verify offline – uses the saved signature JSON + registry audit
+bin/blux-reg verify path/to/artifact.zip
+
+# Revoke a compromised key
+bin/blux-reg keys revoke my-project --reason "compromised" --revoker trust-board
+
+# Inspect ledger integrity
+bin/blux-reg audit artifacts
 ```
 
-## Local-first trust
-All state (keys, manifests, ledger) lives under `~/.config/blux-reg/` by default. Nothing is fetched from the network; every operation is deterministic for the same inputs and keys. Tampering with either manifests or the ledger is detectable via `verify` and `audit verify-chain`.
+Signature files are written to `~/blux-reg/signatures/` and include the
+payload, signature, and public key to enable air-gapped verification. Every
+operation appends to the appropriate ledger under `~/blux-reg/registry/` which
+can be replicated or inspected independently.
+
+## Directory layout
+
+```
+~/blux-reg/
+├── registry/
+│   ├── keys.jsonl        # key issuance events
+│   ├── artifacts.jsonl   # signed artifacts + compatibility metadata
+│   └── revocations.jsonl # key revocation log
+├── signatures/           # detached signature bundles (.sig.json)
+└── manifests/, bin/, …   # optional project-specific files
+```
 
 ## License
 
-Apache-2.0 (see [LICENSE](LICENSE)).
+MIT

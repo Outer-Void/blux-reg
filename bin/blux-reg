@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
-"""Compat shim for blux-reg console entrypoint."""
-from blux_reg.cli import app
+"""BLUX-Reg ecosystem identity and trust CLI."""
+
+import os
+import sys
+
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
+
+from blux_reg.cli import main
 
 if __name__ == "__main__":
-    app()
+    raise SystemExit(main())
