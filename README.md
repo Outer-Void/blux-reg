@@ -4,44 +4,66 @@
 
 blux-reg is a local-first registry that lets you:
 
-- Generate cryptographic keys (ed25519 / RSA)
+- Generate cryptographic keys (ed25519 / RSA optional)
 - Sign manifests and patch-diffs
-- Maintain an append-only audit chain (`audit.log`)
+- Maintain an append-only audit chain (`ledger.jsonl`)
 - Wire into any BLUX project (BLG or standalone)
-
-## Features
-
-- CLI-based (`bin/blux-reg`)
-- Audit chaining (`prev_audit_sha256` verification)
-- Manifest-based system: all patches, events, and installed components are logged
-- Easily integrated into BLUX Lite GOLD via hooks
-- Portable across any BLUX project
 
 ## Installation
 
 ```bash
-# Clone or move your code
-git clone <repo-url> ~/code/blux-reg
-cd ~/code/blux-reg
-
-# Initialize keys (default: ~/.config/blux-reg/keys)
-bin/blux-reg keygen
-
-# Add your first manifest
-bin/blux-reg add-manifest manifests/first.yaml
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt
 ```
 
-## Hooks (BLG Integration)
+## Quickstart
 
-Patch-diff signing: call after each patch-diff
+```bash
+# generate keys under ~/.config/blux-reg/keys/
+bin/blux-reg keygen
 
-Event logging: call on first_start, auto-start, TUI/legacy events
+# sign a file
+bin/blux-reg sign path/to/file
 
-See scripts/hooks/after_patch_apply.sh and scripts/hooks/log_event.sh for examples.
+# verify a signature
+bin/blux-reg verify path/to/file path/to/file.sig
+```
+
+### Paths
+- Config root: `~/.config/blux-reg/` (override with `BLUX_CONFIG_HOME`)
+- Keys: `~/.config/blux-reg/keys/`
+- Ledger: `~/.config/blux-reg/trust/ledger.jsonl`
+- Artifacts: `~/.config/blux-reg/artifacts/`
+
+## Demo (Unified Demo Eligible)
+The demo performs key generation (if missing), creates a manifest and patch diff artifact, signs both, verifies signatures, appends ledger entries with prev-hash chaining, and verifies chain integrity.
+
+```bash
+bin/blux-reg demo
+```
+
+## Doctor
+Run health checks for Python version, dependencies, and directory permissions. Exits non-zero with fixes if anything is wrong.
+
+```bash
+bin/blux-reg doctor
+```
+
+## Audit commands
+- `bin/blux-reg audit add-event '{"event":"something"}'`
+- `bin/blux-reg audit tail`
+- `bin/blux-reg audit verify-chain`
+
+## Artifacts
+Demo artifacts and signatures are written under `~/.config/blux-reg/artifacts/`.
+
+## Integration Hooks
+- **Lite hook:** call `bin/blux-reg sign <file>` after generating manifests or patches to keep the ledger in sync.
+- **Guard hook:** call `bin/blux-reg audit verify-chain` during CI or startup to ensure the trust spine has not been tampered with.
+
+## Support
+outervoid.blux@gmail.com
 
 ## License
-
 MIT
-
-
----
