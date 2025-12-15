@@ -1,69 +1,69 @@
-# blux-reg
+# BLUX-Reg
 
-**Portable, auditable registry + signing/audit chain for BLUX projects**
+**Identity and trust backbone for the BLUX ecosystem.**
 
-blux-reg is a local-first registry that lets you:
+BLUX-Reg now unifies project validation, plugin signing, and user verification
+into a local-first workflow powered by modern cryptography. It couples
+Ed25519 keys with Argon2-protected passphrases and records every trust event in
+append-only JSONL ledgers under `~/blux-reg/registry/`, ensuring compatibility
+with BLUX-Quantum and BLUX-Guard stakeholders.
 
-- Generate cryptographic keys (ed25519 / RSA optional)
-- Sign manifests and patch-diffs
-- Maintain an append-only audit chain (`ledger.jsonl`)
-- Wire into any BLUX project (BLG or standalone)
+## Highlights
 
-## Installation
+- 🛡️ **Role-specific keys** – generate project, plugin, and user keypairs with
+  Ed25519, protected by Argon2 passphrases.
+- 📓 **Append-only audit ledgers** – JSON Lines registries for keys, artifacts,
+  and revocations, each hashed into a tamper-evident chain.
+- 🔐 **Offline trust** – signatures include their public keys and ledger
+  membership proofs so artifacts can be validated without network access.
+- ♻️ **Revocable identities** – append revocation records that invalidate keys
+  across the ecosystem.
+- 🤝 **BLUX-Quantum & BLUX-Guard ready** – compatibility data is embedded in
+  every ledger record for downstream tooling.
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-dev.txt
-```
-
-## Quickstart
-
-```bash
-# generate keys under ~/.config/blux-reg/keys/
-bin/blux-reg keygen
-
-# sign a file
-bin/blux-reg sign path/to/file
-
-# verify a signature
-bin/blux-reg verify path/to/file path/to/file.sig
-```
-
-### Paths
-- Config root: `~/.config/blux-reg/` (override with `BLUX_CONFIG_HOME`)
-- Keys: `~/.config/blux-reg/keys/`
-- Ledger: `~/.config/blux-reg/trust/ledger.jsonl`
-- Artifacts: `~/.config/blux-reg/artifacts/`
-
-## Demo (Unified Demo Eligible)
-The demo performs key generation (if missing), creates a manifest and patch diff artifact, signs both, verifies signatures, appends ledger entries with prev-hash chaining, and verifies chain integrity.
+## Getting started
 
 ```bash
-bin/blux-reg demo
+# Initialise directories and ledgers
+bin/blux-reg init
+
+# Create a project key (prompts for a new passphrase)
+bin/blux-reg keys create my-project project
+
+# List and export keys
+bin/blux-reg keys list
+bin/blux-reg keys export my-project --key-type project
+
+# Sign an artifact (manifest, plugin bundle, release archive, etc.)
+bin/blux-reg sign path/to/artifact.zip my-project project "release"
+
+# Verify offline – uses the saved signature JSON + registry audit
+bin/blux-reg verify path/to/artifact.zip
+
+# Revoke a compromised key
+bin/blux-reg keys revoke my-project --reason "compromised" --revoker trust-board
+
+# Inspect ledger integrity
+bin/blux-reg audit artifacts
 ```
 
-## Doctor
-Run health checks for Python version, dependencies, and directory permissions. Exits non-zero with fixes if anything is wrong.
+Signature files are written to `~/blux-reg/signatures/` and include the
+payload, signature, and public key to enable air-gapped verification. Every
+operation appends to the appropriate ledger under `~/blux-reg/registry/` which
+can be replicated or inspected independently.
 
-```bash
-bin/blux-reg doctor
+## Directory layout
+
 ```
-
-## Audit commands
-- `bin/blux-reg audit add-event '{"event":"something"}'`
-- `bin/blux-reg audit tail`
-- `bin/blux-reg audit verify-chain`
-
-## Artifacts
-Demo artifacts and signatures are written under `~/.config/blux-reg/artifacts/`.
-
-## Integration Hooks
-- **Lite hook:** call `bin/blux-reg sign <file>` after generating manifests or patches to keep the ledger in sync.
-- **Guard hook:** call `bin/blux-reg audit verify-chain` during CI or startup to ensure the trust spine has not been tampered with.
-
-## Support
-outervoid.blux@gmail.com
+~/blux-reg/
+├── registry/
+│   ├── keys.jsonl        # key issuance events
+│   ├── artifacts.jsonl   # signed artifacts + compatibility metadata
+│   └── revocations.jsonl # key revocation log
+├── signatures/           # detached signature bundles (.sig.json)
+└── manifests/, bin/, …   # optional project-specific files
+```
 
 ## License
+
 MIT

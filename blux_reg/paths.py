@@ -1,44 +1,20 @@
-import os
+from __future__ import annotations
+
 from pathlib import Path
 
+HOME = Path.home()
+REGROOT = HOME / "blux-reg"
+REGISTRY_ROOT = REGROOT / "registry"
+KEYSTORE_ROOT = HOME / ".config" / "blux-reg" / "keys"
+SIGNATURES_ROOT = REGROOT / "signatures"
 
-APP_NAME = "blux-reg"
-CONFIG_ENV = "BLUX_CONFIG_HOME"
-DEFAULT_CONFIG_ROOT = Path(os.environ.get(CONFIG_ENV) or Path.home() / ".config" / APP_NAME)
+LEDGER_PATHS = {
+    "keys": REGISTRY_ROOT / "keys.jsonl",
+    "artifacts": REGISTRY_ROOT / "artifacts.jsonl",
+    "revocations": REGISTRY_ROOT / "revocations.jsonl",
+}
 
-
-def get_config_root() -> Path:
-    return Path(os.environ.get(CONFIG_ENV) or DEFAULT_CONFIG_ROOT)
-
-
-def get_keys_dir() -> Path:
-    return get_config_root() / "keys"
-
-
-def get_ledger_path() -> Path:
-    return get_config_root() / "trust" / "ledger.jsonl"
-
-
-def get_artifacts_dir() -> Path:
-    return get_config_root() / "artifacts"
-
-
-def ensure_directories() -> None:
-    keys = get_keys_dir()
-    ledger_path = get_ledger_path()
-    artifacts = get_artifacts_dir()
-
-    keys.mkdir(parents=True, exist_ok=True)
-    ledger_path.parent.mkdir(parents=True, exist_ok=True)
-    artifacts.mkdir(parents=True, exist_ok=True)
-
-
-__all__ = [
-    "APP_NAME",
-    "CONFIG_ENV",
-    "get_config_root",
-    "get_keys_dir",
-    "get_ledger_path",
-    "get_artifacts_dir",
-    "ensure_directories",
-]
+REQUIRED_COMPATIBILITY = {
+    "BLUX-Quantum": ">=1.0",
+    "BLUX-Guard": ">=1.0",
+}

@@ -1,0 +1,29 @@
+[project]
+name = "blux-reg"
+version = "0.2.0"
+description = "Local-first registry signer + audit chain for BLUX demos"
+authors = [{name = "BLUX"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.9"
+dependencies = [
+  "click>=8",
+  "cryptography>=42",
+]
+
+[project.scripts]
+blux-reg = "blux_reg.cli:app"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

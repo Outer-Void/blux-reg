@@ -1,100 +1,112 @@
-import json
-from dataclasses import dataclass, asdict
-from datetime import datetime, timezone
-from hashlib import sha256
-from pathlib import Path
-from typing import Iterable, List, Optional
+from __future__ import annotations
 
-from .crypto import fingerprint_from_public_key
-from .paths import ensure_directories, get_ledger_path
+import json
+import hashlib
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, Iterator, List, Optional
+
+from .paths import LEDGER_PATHS
+
+CANONICAL_SEPARATORS = (",", ":")
+
+
+def canonical_dumps(data: dict) -> str:
+    return json.dumps(data, sort_keys=True, separators=CANONICAL_SEPARATORS)
+
+
+def canonical_bytes(data: dict) -> bytes:
+    return canonical_dumps(data).encode("utf-8")
+
+
+def sha256_hex(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
 
 
 @dataclass
 class LedgerEntry:
-    ts: str
-    type: str
-    payload: dict
-    prev_hash: Optional[str]
-    signer_fingerprint: str
-    signature: str
-    algo: dict
-    hash: Optional[str] = None
+    raw: dict
 
-    def to_dict(self) -> dict:
-        return asdict(self)
+    @property
+    def prev_hash(self) -> Optional[str]:
+        return self.raw.get("prev_hash")
 
+    @property
+    def chain_hash(self) -> Optional[str]:
+        return self.raw.get("chain_hash")
 
-def _canonical_json(data: dict) -> str:
-    return json.dumps(data, sort_keys=True, separators=(",", ":"))
-
-
-def _compute_hash(entry_dict: dict) -> str:
-    temp = dict(entry_dict)
-    temp["hash"] = None
-    payload = _canonical_json(temp)
-    return sha256(payload.encode()).hexdigest()
+    def payload_bytes(self) -> bytes:
+        payload = dict(self.raw)
+        payload.pop("chain_hash", None)
+        return canonical_bytes(payload)
 
 
-def load_entries(path: Optional[Path] = None) -> List[LedgerEntry]:
-    ledger_path = path or get_ledger_path()
-    if not ledger_path.exists():
-        return []
-    entries = []
-    with ledger_path.open("r", encoding="utf-8") as f:
-        for line in f:
-            if not line.strip():
-                continue
-            data = json.loads(line)
-            entries.append(LedgerEntry(**data))
-    return entries
+class Ledger:
+    def __init__(self, path: Path):
+        self.path = path
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+
+    def _iter_lines(self) -> Iterator[str]:
+        if not self.path.exists():
+            return iter(())
+        with self.path.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if line:
+                    yield line
+
+    def entries(self) -> List[LedgerEntry]:
+        return [LedgerEntry(json.loads(line)) for line in self._iter_lines()]
+
+    def last_hash(self) -> Optional[str]:
+        last_line = None
+        for last_line in self._iter_lines():
+            pass
+        if last_line is None:
+            return None
+        payload = json.loads(last_line)
+        payload.pop("chain_hash", None)
+        return sha256_hex(canonical_bytes(payload))
+
+    def append(self, entry: dict) -> LedgerEntry:
+        entry = dict(entry)
+        prev_hash = self.last_hash()
+        if prev_hash:
+            entry.setdefault("prev_hash", prev_hash)
+        elif "prev_hash" in entry and entry["prev_hash"] is None:
+            entry.pop("prev_hash")
+        payload_bytes = canonical_bytes(entry)
+        chain_hash = sha256_hex(payload_bytes)
+        entry_with_hash = dict(entry)
+        entry_with_hash["chain_hash"] = chain_hash
+        line = canonical_dumps(entry_with_hash)
+        with self.path.open("a", encoding="utf-8") as fh:
+            fh.write(line + "\n")
+        return LedgerEntry(entry_with_hash)
+
+    def verify_chain(self) -> bool:
+        prev_hash = None
+        for entry in self.entries():
+            payload = dict(entry.raw)
+            chain_hash = payload.pop("chain_hash", None)
+            payload_bytes = canonical_bytes(payload)
+            computed_hash = sha256_hex(payload_bytes)
+            if computed_hash != chain_hash:
+                return False
+            if prev_hash != payload.get("prev_hash"):
+                if prev_hash is None and payload.get("prev_hash") in (None, ""):
+                    pass
+                else:
+                    return False
+            prev_hash = computed_hash
+        return True
 
 
-def append_entry(entry_type: str, payload: dict, signature: str, public_key_path: Path) -> LedgerEntry:
-    ensure_directories()
-    ledger_path = get_ledger_path()
-    entries = load_entries(ledger_path)
-    prev_hash = entries[-1].hash if entries else None
-    signer_fp = fingerprint_from_public_key(public_key_path)
-    entry = LedgerEntry(
-        ts=datetime.now(timezone.utc).isoformat(),
-        type=entry_type,
-        payload=payload,
-        prev_hash=prev_hash,
-        signer_fingerprint=signer_fp,
-        signature=signature,
-        algo={
-            "hash": {"name": "sha256", "version": 1},
-            "sig": {"name": "ed25519", "version": 1},
-        },
-    )
-    entry.hash = _compute_hash(entry.to_dict())
-    with ledger_path.open("a", encoding="utf-8") as f:
-        f.write(_canonical_json(entry.to_dict()) + "\n")
-    return entry
+LEDGERS = {name: Ledger(path) for name, path in LEDGER_PATHS.items()}
 
 
-def verify_chain(path: Optional[Path] = None) -> bool:
-    entries = load_entries(path)
-    prev_hash = None
-    for entry in entries:
-        expected_hash = _compute_hash(entry.to_dict())
-        if entry.hash != expected_hash:
-            return False
-        if entry.prev_hash != prev_hash:
-            return False
-        prev_hash = entry.hash
-    return True
-
-
-def tail_entries(limit: int = 10, path: Optional[Path] = None) -> Iterable[LedgerEntry]:
-    entries = load_entries(path)
-    return entries[-limit:]
-
-
-__all__ = [
-    "LedgerEntry",
-    "append_entry",
-    "verify_chain",
-    "tail_entries",
-    "load_entries",
-]
+def get_ledger(name: str) -> Ledger:
+    try:
+        return LEDGERS[name]
+    except KeyError:
+        raise ValueError(f"Unknown ledger '{name}'. Known: {', '.join(sorted(LEDGERS))}")
