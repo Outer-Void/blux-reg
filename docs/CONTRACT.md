@@ -30,6 +30,64 @@ This document specifies the public contract for the unified BLUX registry demo. 
 - Signature input: canonical JSON of all manifest fields **excluding** `signature`.
 - Manifest hash (for the ledger): SHA-256 of canonical JSON including the signature.
 
+## Capability token schema (`schema_version: 1.0`)
+```json
+{
+  "schema_version": "1.0",
+  "token_type": "capability",
+  "issued_at": "2025-01-01T00:00:00+00:00",
+  "expires_at": "2025-01-02T00:00:00+00:00",
+  "ttl_seconds": 86400,
+  "capability": "publish",
+  "audience_repo": "Outer-Void/blux-guard",
+  "constraints": {
+    "scope": "release"
+  },
+  "issuer": {
+    "key_id": "project-alpha",
+    "key_type": "project",
+    "public_key": "<base64 ed25519 public key>",
+    "compatibility": {
+      "BLUX-Quantum": ">=1.0",
+      "BLUX-Guard": ">=1.0"
+    }
+  },
+  "signature": "<base64 ed25519 signature over canonical token payload>"
+}
+```
+- Canonicalization: JSON serialized with sorted keys and `",":"` separators.
+- Signature input: canonical JSON of all token fields **excluding** `signature`.
+- Token hash (`capability_token_ref`): SHA-256 of canonical JSON including the signature.
+- Tokens are offline-verifiable, scoped, and time-bound. Secrets must not be embedded in tokens.
+
+### Token ledger entry (append-only)
+```json
+{
+  "timestamp": "2025-01-01T00:00:00+00:00",
+  "issuer": "project-alpha",
+  "role": "project",
+  "token_hash": "<sha256 canonical token JSON>",
+  "payload": "<token payload without signature>",
+  "signature": "<base64 signature over payload>"
+}
+```
+
+### Token revocation entry (append-only)
+```json
+{
+  "timestamp": "2025-01-01T00:00:00+00:00",
+  "issuer": "security-team",
+  "role": "revocation",
+  "payload": {
+    "event": "token_revoked",
+    "timestamp": "2025-01-01T00:00:00+00:00",
+    "token_hash": "<sha256 canonical token JSON>",
+    "reason": "compromised",
+    "revoker": "security-team"
+  }
+}
+```
+
 ## Ledger schema (JSONL, append-only)
 Each line is canonical JSON with sorted keys.
 
@@ -47,7 +105,16 @@ Required fields:
 `prev_hash` of entry `n` **must equal** `entry_hash` of entry `n-1`. Any deviation invalidates the chain.
 
 ### Allowed actions
-`keygen`, `key-import`, `sign`, `event`, plus future actions that follow the schema above.
+`keygen`, `key-import`, `sign`, `event`, `token-issue`, `token-revoke`, plus future actions that follow the schema above.
+
+## Envelope reference
+Artifacts that require delegated capabilities should reference tokens by hash:
+
+```json
+{
+  "capability_token_ref": "<sha256 hash of canonical token JSON>"
+}
+```
 
 ## CLI contract
 - `blux-reg init` — create config dirs
@@ -61,5 +128,9 @@ Required fields:
 - `blux-reg audit add-event "message" [--actor FINGERPRINT]`
 - `blux-reg audit tail [-n N] [--json]`
 - `blux-reg audit verify-chain`
+- `blux-reg token issue <key_id> <key_type> <capability> <audience_repo> <ttl_seconds> [--constraints JSON]`
+- `blux-reg token verify <token_path>`
+- `blux-reg token revoke <token_hash> [--reason REASON] --revoker ID`
+- `blux-reg token show <token_path>`
 
 Exit codes are stable: `0` success, `1` on verification/chain failures.
