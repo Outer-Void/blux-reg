@@ -12,15 +12,15 @@
 
 ## v1.1 — Ecosystem Integrations
 - [ ] Federation sync tooling for replicating ledgers
-- [ ] Trust policy authoring kit (policy-as-code)
+- [ ] Trust authoring kit (contract-driven)
 - [ ] Quantum attestation bridges
 
 ## v1.2 — Developer Experience
 - [ ] Python API for programmatic signing and verification
 - [ ] Rich TUI for identity lifecycle operations
-- [ ] Automated rotation policies and scheduled attestations
+- [ ] Automated rotation schedules and timed attestations
 
 ## v2.0 — Multi-tenant Governance
 - [ ] Distributed quorum approvals for high-risk actions
 - [ ] Ledger anchoring to external transparency logs
-- [ ] Automated guard-rail enforcement via BLUX-Guard policy engine
+- [ ] Automated guard-rail enforcement via BLUX-Guard verification hooks
