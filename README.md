@@ -116,31 +116,25 @@ bin/blux-reg sign plugin.tar.gz plugin-dev plugin "v1.2.3" \
 ### Verifying Artifacts
 
 ```bash
-# Verify an artifact offline using saved signature
-bin/blux-reg verify path/to/artifact.zip
-
-# Verify with explicit signature file
-bin/blux-reg verify artifact.zip --signature artifact.zip.sig.json
-
-# Verify and check revocation status
-bin/blux-reg verify artifact.zip --check-revocations
+# Verify an artifact manifest offline
+bin/blux-reg verify-manifest path/to/artifact.blux-manifest.json
 ```
 
 ### Capability Tokens
 
 ```bash
 # Issue a token for a repository capability
-bin/blux-reg token issue my-project project publish Outer-Void/blux-guard 3600 \
+bin/blux-reg issue my-project publish Outer-Void/blux-guard 3600 \
   --constraints '{"scope":"release"}'
 
-# Show token details (includes the token hash reference)
-bin/blux-reg token show /path/to/token.json
+# Hash a token (deterministic reference)
+bin/blux-reg hash /path/to/token.json
 
 # Verify a token offline
-bin/blux-reg token verify /path/to/token.json
+bin/blux-reg verify /path/to/token.json
 
 # Revoke a token by hash
-bin/blux-reg token revoke <token_hash> --revoker security-team
+bin/blux-reg revoke <token_hash> --revoker security-team
 ```
 
 ### Key Management
@@ -183,6 +177,13 @@ Artifacts that require delegated capabilities should reference issued tokens by 
   "capability_token_ref": "<sha256 hash of canonical token JSON>"
 }
 ```
+
+### Token Lifecycle
+
+1. **Issue** a token offline with a capability and audience.
+2. **Hash** the token to compute the deterministic reference (`token_hash`).
+3. **Verify** the token offline using the embedded public key.
+4. **Revoke** the token hash if access must be withdrawn.
 
 ---
 

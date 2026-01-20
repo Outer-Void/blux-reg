@@ -26,6 +26,8 @@ MANIFEST_DIR = CONFIG_ROOT / "manifests"
 TRUST_DIR = CONFIG_ROOT / "trust"
 LEDGER_PATH = TRUST_DIR / "ledger.jsonl"
 CACHE_DIR = CONFIG_ROOT / "cache"
+TOKENS_DIR = TRUST_DIR / "tokens"
+REVOCATIONS_PATH = TRUST_DIR / "token_revocations.jsonl"
 
 
 def refresh_paths() -> None:
@@ -33,16 +35,18 @@ def refresh_paths() -> None:
 
     Useful for tests that temporarily override ``BLUX_REG_CONFIG_DIR``.
     """
-    global CONFIG_ROOT, KEYS_DIR, MANIFEST_DIR, TRUST_DIR, LEDGER_PATH, CACHE_DIR
+    global CONFIG_ROOT, KEYS_DIR, MANIFEST_DIR, TRUST_DIR, LEDGER_PATH, CACHE_DIR, TOKENS_DIR, REVOCATIONS_PATH
     CONFIG_ROOT = _resolve_root()
     KEYS_DIR = CONFIG_ROOT / "keys"
     MANIFEST_DIR = CONFIG_ROOT / "manifests"
     TRUST_DIR = CONFIG_ROOT / "trust"
     LEDGER_PATH = TRUST_DIR / "ledger.jsonl"
     CACHE_DIR = CONFIG_ROOT / "cache"
+    TOKENS_DIR = TRUST_DIR / "tokens"
+    REVOCATIONS_PATH = TRUST_DIR / "token_revocations.jsonl"
 
 
 def ensure_directories() -> None:
     """Create required directories if they do not exist."""
-    for path in (CONFIG_ROOT, KEYS_DIR, MANIFEST_DIR, TRUST_DIR, CACHE_DIR):
+    for path in (CONFIG_ROOT, KEYS_DIR, MANIFEST_DIR, TRUST_DIR, CACHE_DIR, TOKENS_DIR):
         path.mkdir(parents=True, exist_ok=True)
