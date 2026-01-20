@@ -18,6 +18,7 @@ from .registry import (
     sign_artifact,
     verify_artifact,
 )
+from .tokens import issue_capability_token, load_token, revoke_capability_token, show_token, verify_capability_token
 
 KEY_TYPES = {"project", "plugin", "user"}
 
@@ -60,6 +61,29 @@ def build_parser() -> argparse.ArgumentParser:
 
     chain_parser = sub.add_parser("audit", help="inspect ledger health")
     chain_parser.add_argument("ledger", choices=sorted(LEDGERS.keys()))
+
+    token_parser = sub.add_parser("token", help="manage capability tokens")
+    token_sub = token_parser.add_subparsers(dest="token_cmd")
+
+    token_issue = token_sub.add_parser("issue", help="issue a capability token")
+    token_issue.add_argument("key_id")
+    token_issue.add_argument("key_type", choices=sorted(KEY_TYPES))
+    token_issue.add_argument("capability", help="capability name")
+    token_issue.add_argument("audience_repo", help="audience repository")
+    token_issue.add_argument("ttl_seconds", type=int, help="token lifetime in seconds")
+    token_issue.add_argument("--constraints", default="{}", help="JSON constraints object")
+    token_issue.add_argument("--passphrase")
+
+    token_verify = token_sub.add_parser("verify", help="verify a capability token")
+    token_verify.add_argument("token_path", type=Path)
+
+    token_revoke = token_sub.add_parser("revoke", help="revoke a capability token")
+    token_revoke.add_argument("token_hash")
+    token_revoke.add_argument("--reason", default="unspecified")
+    token_revoke.add_argument("--revoker", required=True)
+
+    token_show = token_sub.add_parser("show", help="show a capability token")
+    token_show.add_argument("token_path", type=Path)
 
     return parser
 
@@ -159,6 +183,64 @@ def handle_audit(args: argparse.Namespace) -> int:
     return 0 if ok else 2
 
 
+def _parse_constraints(raw: str) -> dict:
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid constraints JSON: {exc}") from exc
+    if not isinstance(data, dict):
+        raise ValueError("Constraints must be a JSON object")
+    return data
+
+
+def handle_token(args: argparse.Namespace) -> int:
+    if args.token_cmd == "issue":
+        try:
+            passphrase = prompt_passphrase(existing=True, provided=args.passphrase)
+            constraints = _parse_constraints(args.constraints)
+        except ValueError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+        try:
+            token, token_hash, path = issue_capability_token(
+                args.key_id,
+                args.key_type,
+                passphrase,
+                args.capability,
+                args.audience_repo,
+                args.ttl_seconds,
+                constraints,
+            )
+        except (FileNotFoundError, PassphraseError, ValueError) as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
+        print(json.dumps({"token_hash": token_hash, "token_path": str(path), "token": token}, indent=2))
+        return 0
+    if args.token_cmd == "verify":
+        try:
+            token = load_token(args.token_path)
+            outcome = verify_capability_token(token)
+        except Exception as exc:
+            print(f"verification failed: {exc}", file=sys.stderr)
+            return 1
+        print(json.dumps(outcome, indent=2, sort_keys=True))
+        return 0
+    if args.token_cmd == "revoke":
+        revoke_capability_token(args.token_hash, args.reason, args.revoker)
+        print(f"[!] Revoked token {args.token_hash}")
+        return 0
+    if args.token_cmd == "show":
+        try:
+            payload = show_token(args.token_path)
+        except FileNotFoundError as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0
+    print("usage: blux-reg token [issue|verify|revoke|show]", file=sys.stderr)
+    return 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -175,6 +257,8 @@ def main(argv: list[str] | None = None) -> int:
         return handle_verify(args)
     if args.cmd == "audit":
         return handle_audit(args)
+    if args.cmd == "token":
+        return handle_token(args)
     parser.print_help()
     return 1
 

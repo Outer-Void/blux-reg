@@ -7,11 +7,12 @@ from typing import Dict, Iterable, Optional
 from .crypto import KeyMaterial, generate_ed25519, now_iso, sign_payload, verify_signature
 from .keystore import KeyStore
 from .ledger import LedgerEntry, get_ledger
-from .paths import LEDGER_PATHS, REQUIRED_COMPATIBILITY, SIGNATURES_ROOT
+from .paths import LEDGER_PATHS, REQUIRED_COMPATIBILITY, SIGNATURES_ROOT, TOKENS_ROOT
 
 
 def ensure_structure() -> None:
     SIGNATURES_ROOT.mkdir(parents=True, exist_ok=True)
+    TOKENS_ROOT.mkdir(parents=True, exist_ok=True)
     for path in LEDGER_PATHS.values():
         path.parent.mkdir(parents=True, exist_ok=True)
         if not path.exists():

@@ -17,6 +17,7 @@ BLUX-Reg is the cryptographic trust layer that unifies project validation, plugi
 - 🔐 **Cryptographic Identity** - Ed25519 keypairs protected by Argon2 passphrases
 - 📓 **Tamper-Evident Ledgers** - Append-only JSONL audit trails with hash chains
 - 🛡️ **Offline Verification** - Air-gapped artifact validation with embedded proofs
+- 🎟️ **Capability Tokens** - Offline-verifiable, time-bound delegation tokens
 - ♻️ **Revocable Trust** - Ecosystem-wide key revocation with audit trails
 - 🤝 **Ecosystem Integration** - Native compatibility with BLUX-Quantum and BLUX-Guard
 
@@ -48,6 +49,12 @@ Signatures are self-contained and include:
 - Compatibility metadata
 
 This enables artifact validation without network access or centralized registries.
+
+### 🎟️ Capability Tokens
+Issue scoped, time-bound tokens to delegate actions without sharing secrets:
+- Signed with Ed25519 and verified offline
+- Bound to a capability name, audience repo, and constraints
+- Referenced by `capability_token_ref` hash inside envelopes
 
 ### ♻️ Revocable Identities
 Compromised or expired keys can be revoked with:
@@ -119,6 +126,23 @@ bin/blux-reg verify artifact.zip --signature artifact.zip.sig.json
 bin/blux-reg verify artifact.zip --check-revocations
 ```
 
+### Capability Tokens
+
+```bash
+# Issue a token for a repository capability
+bin/blux-reg token issue my-project project publish Outer-Void/blux-guard 3600 \
+  --constraints '{"scope":"release"}'
+
+# Show token details (includes the token hash reference)
+bin/blux-reg token show /path/to/token.json
+
+# Verify a token offline
+bin/blux-reg token verify /path/to/token.json
+
+# Revoke a token by hash
+bin/blux-reg token revoke <token_hash> --revoker security-team
+```
+
 ### Key Management
 
 ```bash
@@ -148,6 +172,16 @@ bin/blux-reg ledger export --output registry-backup.tar.gz
 
 # Sync ledgers between systems
 bin/blux-reg ledger sync --remote user@server:/blux-reg/registry/
+```
+
+### Envelope Reference
+
+Artifacts that require delegated capabilities should reference issued tokens by hash:
+
+```json
+{
+  "capability_token_ref": "<sha256 hash of canonical token JSON>"
+}
 ```
 
 ---
