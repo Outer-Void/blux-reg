@@ -1,22 +1,13 @@
-import os
-from pathlib import Path
-
-from blux_reg import paths
-from blux_reg.crypto import DEFAULT_PRIVATE, DEFAULT_PUBLIC, generate_ed25519_keypair, sign_file, verify_file
+from blux_reg import config, crypto
 
 
 def test_keygen_sign_verify(tmp_path, monkeypatch):
-    monkeypatch.setenv("BLUX_CONFIG_HOME", str(tmp_path))
-    key_dir = paths.get_keys_dir()
-    generate_ed25519_keypair(key_dir)
+    monkeypatch.setenv("BLUX_REG_CONFIG_DIR", str(tmp_path))
+    config.refresh_paths()
+    crypto.generate_keypair("test")
 
-    target = tmp_path / "sample.txt"
-    target.write_text("hello")
-
-    signature, sig_path = sign_file(target, key_dir / DEFAULT_PRIVATE)
-    assert sig_path.exists()
-    assert verify_file(target, sig_path, key_dir / DEFAULT_PUBLIC)
-
-    # signature should fail on modification
-    target.write_text("tamper")
-    assert not verify_file(target, sig_path, key_dir / DEFAULT_PUBLIC)
+    message = b"hello"
+    signature = crypto.sign_message("test", message)
+    public_key = crypto.load_public_key("test")
+    assert crypto.verify_signature(public_key, message, signature)
+    assert not crypto.verify_signature(public_key, b"tamper", signature)

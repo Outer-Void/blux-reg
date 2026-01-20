@@ -1,3 +1,3 @@
 """blux-reg package."""
 
-__all__ = ["config", "crypto", "ledger", "manifest"]
+__all__ = ["config", "crypto", "ledger", "manifest", "tokens"]

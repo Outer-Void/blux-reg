@@ -6,7 +6,7 @@ from typing import Optional
 
 import click
 
-from . import config, crypto, ledger, manifest
+from . import config, crypto, ledger, manifest, tokens
 from .util import canonical_json
 
 
@@ -121,15 +121,74 @@ def sign(artifact: str, key_name: str, output: Optional[str]):
     click.echo(f"fingerprint: {data['key_fingerprint']}")
 
 
-@app.command()
+@app.command(name="verify-manifest")
 @click.argument("manifest_path", type=click.Path(exists=True))
-def verify(manifest_path: str):
+def verify_manifest(manifest_path: str):
     ok = manifest.verify_manifest(Path(manifest_path))
     if ok:
         click.echo("verified")
         raise SystemExit(0)
     click.echo("verification failed", err=True)
     raise SystemExit(1)
+
+
+def _parse_constraints(raw: str) -> dict:
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise click.ClickException(f"Invalid constraints JSON: {exc}") from exc
+    if not isinstance(data, dict):
+        raise click.ClickException("Constraints must be a JSON object")
+    return data
+
+
+@app.command()
+@click.argument("key_name")
+@click.argument("capability")
+@click.argument("audience")
+@click.argument("ttl_seconds", type=int)
+@click.option("--constraints", default="{}", help="JSON constraints object")
+@click.option("--output", type=click.Path(), help="Output path for token JSON")
+def issue(key_name: str, capability: str, audience: str, ttl_seconds: int, constraints: str, output: Optional[str]):
+    """Issue a capability token offline."""
+    token, token_hash, path = tokens.issue_capability_token(
+        key_name=key_name,
+        capability=capability,
+        audience=audience,
+        ttl_seconds=ttl_seconds,
+        constraints=_parse_constraints(constraints),
+        output_path=Path(output) if output else None,
+    )
+    click.echo(
+        json.dumps({"token_hash": token_hash, "token_path": str(path), "token": token}, indent=2, sort_keys=True)
+    )
+
+
+@app.command(name="hash")
+@click.argument("token_path", type=click.Path(exists=True))
+def hash_token(token_path: str):
+    """Hash a token (canonical JSON sha256)."""
+    token_hash = tokens.hash_token_file(Path(token_path))
+    click.echo(token_hash)
+
+
+@app.command()
+@click.argument("token_path", type=click.Path(exists=True))
+def verify(token_path: str):
+    """Verify a capability token offline."""
+    token = tokens.load_token(Path(token_path))
+    result = tokens.verify_capability_token(token)
+    click.echo(json.dumps(result, indent=2, sort_keys=True))
+
+
+@app.command()
+@click.argument("token_hash")
+@click.option("--reason", default="unspecified")
+@click.option("--revoker", required=True, help="Identifier for the revocation")
+def revoke(token_hash: str, reason: str, revoker: str):
+    """Revoke a capability token offline."""
+    entry = tokens.revoke_capability_token(token_hash, reason, revoker)
+    click.echo(json.dumps(entry, indent=2, sort_keys=True))
 
 
 @app.group()

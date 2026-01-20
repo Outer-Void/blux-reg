@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Capability Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generated_at",
+    "tokens"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tokens": {
+      "type": "array",
+      "items": {
+        "$ref": "capability_token.schema.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}

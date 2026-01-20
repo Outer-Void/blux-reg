@@ -1,35 +1,20 @@
-import importlib
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
-
-def _reload_modules(tmp_path, monkeypatch):
-    monkeypatch.setenv("HOME", str(tmp_path))
-    import blux_reg.paths as paths
-    importlib.reload(paths)
-    import blux_reg.ledger as ledger
-    importlib.reload(ledger)
-    import blux_reg.keystore as keystore
-    importlib.reload(keystore)
-    import blux_reg.registry as registry
-    importlib.reload(registry)
-    import blux_reg.tokens as tokens
-    importlib.reload(tokens)
-    return registry, tokens
+from blux_reg import config, crypto, tokens
 
 
-def _setup_key(registry):
-    return registry.create_key("project-alpha", "project", "secret")
+def _setup_key(tmp_path, monkeypatch):
+    monkeypatch.setenv("BLUX_REG_CONFIG_DIR", str(tmp_path))
+    config.refresh_paths()
+    crypto.generate_keypair("issuer")
 
 
 def test_token_validates(tmp_path, monkeypatch):
-    registry, tokens = _reload_modules(tmp_path, monkeypatch)
-    _setup_key(registry)
+    _setup_key(tmp_path, monkeypatch)
     token, token_hash, _ = tokens.issue_capability_token(
-        "project-alpha",
-        "project",
-        "secret",
+        "issuer",
         "publish",
         "outer-void/blux-guard",
         3600,
@@ -40,12 +25,9 @@ def test_token_validates(tmp_path, monkeypatch):
 
 
 def test_token_expired_fails(tmp_path, monkeypatch):
-    registry, tokens = _reload_modules(tmp_path, monkeypatch)
-    _setup_key(registry)
+    _setup_key(tmp_path, monkeypatch)
     token, _, _ = tokens.issue_capability_token(
-        "project-alpha",
-        "project",
-        "secret",
+        "issuer",
         "publish",
         "outer-void/blux-guard",
         1,
@@ -57,12 +39,9 @@ def test_token_expired_fails(tmp_path, monkeypatch):
 
 
 def test_token_revoked_fails(tmp_path, monkeypatch):
-    registry, tokens = _reload_modules(tmp_path, monkeypatch)
-    _setup_key(registry)
+    _setup_key(tmp_path, monkeypatch)
     token, token_hash, _ = tokens.issue_capability_token(
-        "project-alpha",
-        "project",
-        "secret",
+        "issuer",
         "publish",
         "outer-void/blux-guard",
         3600,
@@ -74,12 +53,9 @@ def test_token_revoked_fails(tmp_path, monkeypatch):
 
 
 def test_token_tampered_fails(tmp_path, monkeypatch):
-    registry, tokens = _reload_modules(tmp_path, monkeypatch)
-    _setup_key(registry)
+    _setup_key(tmp_path, monkeypatch)
     token, _, _ = tokens.issue_capability_token(
-        "project-alpha",
-        "project",
-        "secret",
+        "issuer",
         "publish",
         "outer-void/blux-guard",
         3600,
@@ -88,3 +64,17 @@ def test_token_tampered_fails(tmp_path, monkeypatch):
     token["capability"] = "delete"
     with pytest.raises(ValueError, match="signature"):
         tokens.verify_capability_token(token)
+
+
+def test_token_hash_roundtrip(tmp_path, monkeypatch):
+    _setup_key(tmp_path, monkeypatch)
+    token, token_hash, path = tokens.issue_capability_token(
+        "issuer",
+        "deploy",
+        "outer-void/blux-guard",
+        3600,
+        {},
+    )
+    assert tokens.hash_token_file(path) == token_hash
+    now = datetime.now(timezone.utc).replace(microsecond=0)
+    assert tokens.verify_capability_token(token, now=now)["status"] == "verified"
