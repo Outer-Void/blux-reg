@@ -3,76 +3,68 @@
 ## 1) Metadata
 - Repository name: blux-reg
 - Organization / owner: unknown
-- Default branch: unknown
-- HEAD commit hash: 47cddb32429e916600275796a48feabb9cf6653e
-- Snapshot timestamp (UTC): 2026-01-20T13:56:39Z
-- Total file count (excluding directories): 45
-- Short description: **Identity and Trust Backbone for the BLUX Ecosystem**
+- Default branch: work
+- HEAD commit hash: e902807fad809288bdba86b021e0f70e3e08e59b
+- Snapshot timestamp (UTC): 2026-01-21T07:57:38Z
+- Total file count (excluding directories): 39
+- Short description: BLUX-Reg
 
 ## 2) Repository Tree
-blux-reg/
-├── .github/
-│   └── workflows/
-│       └── ci.yml [text]
-├── .gitignore [text]
-├── COMMERCIAL.md [text]
-├── LICENSE [text]
-├── LICENSE-APACHE [text]
-├── LICENSE-COMMERCIAL [text]
-├── NOTICE [text]
-├── README.md [text]
-├── ROLE.md [text]
-├── bin/
-│   └── blux-reg [text]
-├── blux_reg/
-│   ├── __init__.py [text]
-│   ├── cli.py [text]
-│   ├── crypto.py [text]
-│   ├── doctor.py [text]
-│   ├── keystore.py [text]
-│   ├── ledger.py [text]
-│   ├── paths.py [text]
-│   ├── registry.py [text]
-│   └── tokens.py [text]
-├── docs/
-│   ├── CONTRACT.md [text]
-│   └── roles.md [text]
-├── plan.md [text]
-├── pyproject.toml [text]
-├── requirements-dev.txt [text]
-├── requirements.txt [text]
-├── schemas/
-│   ├── capability_manifest.schema.json [text]
-│   ├── capability_token.schema.json [text]
-│   └── revocation.schema.json [text]
-├── scripts/
-│   ├── demo_unified_reg.sh [text]
-│   └── physics_check.sh [text]
-├── snapshot.md [text]
-├── src/
-│   └── blux_reg/
-│       ├── __init__.py [text]
-│       ├── cli.py [text]
-│       ├── config.py [text]
-│       ├── crypto.py [text]
-│       ├── ledger.py [text]
-│       ├── manifest.py [text]
-│       ├── tokens.py [text]
-│       └── util.py [text]
-└── tests/
-    ├── conftest.py [text]
-    ├── test_boundary_ci.py [text]
-    ├── test_crypto.py [text]
-    ├── test_flow.py [text]
-    ├── test_ledger.py [text]
-    └── test_tokens.py [text]
+.github/
+  workflows/
+    ci.yml [text]
+bin/
+  blux-reg [text]
+docs/
+  CONTRACT.md [text]
+  roles.md [text]
+schemas/
+  capability_manifest.schema.json [text]
+  capability_token.schema.json [text]
+  revocation.schema.json [text]
+scripts/
+  demo_unified_reg.sh [text]
+  physics_check.sh [text]
+src/
+  blux_reg/
+    __init__.py [text]
+    api.py [text]
+    cli.py [text]
+    config.py [text]
+    crypto.py [text]
+    ledger.py [text]
+    manifest.py [text]
+    tokens.py [text]
+    trust_store.py [text]
+    util.py [text]
+tests/
+  conftest.py [text]
+  test_boundary_ci.py [text]
+  test_crypto.py [text]
+  test_flow.py [text]
+  test_ledger.py [text]
+  test_tokens.py [text]
+  test_trust_store.py [text]
+.gitignore [text]
+COMMERCIAL.md [text]
+LICENSE [text]
+LICENSE-APACHE [text]
+LICENSE-COMMERCIAL [text]
+NOTICE [text]
+README.md [text]
+ROLE.md [text]
+plan.md [text]
+pyproject.toml [text]
+requirements-dev.txt [text]
+requirements.txt [text]
+snapshot.md [text]
 
 ## 3) FULL FILE CONTENTS (MANDATORY)
 
 FILE: .github/workflows/ci.yml
 Kind: text
 Size: 593
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 name: CI
@@ -106,7 +98,7 @@ jobs:
 FILE: .gitignore
 Kind: text
 Size: 37
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 __pycache__/
@@ -117,7 +109,7 @@ __pycache__/
 FILE: COMMERCIAL.md
 Kind: text
 Size: 669
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 # Commercial Licensing
@@ -138,7 +130,7 @@ Email theoutervoid@outlook.com to discuss terms and obtain a commercial agreemen
 FILE: LICENSE
 Kind: text
 Size: 334
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 This project is dual-licensed.
@@ -151,7 +143,7 @@ Unless otherwise noted, source files include a copyright notice reflecting the p
 FILE: LICENSE-APACHE
 Kind: text
 Size: 11342
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
                                  Apache License
@@ -359,7 +351,7 @@ CONTENT:
 FILE: LICENSE-COMMERCIAL
 Kind: text
 Size: 1721
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 Proprietary Commercial License
@@ -396,7 +388,7 @@ Copyright (c) 2025 - Outer-Void. All rights reserved.
 FILE: NOTICE
 Kind: text
 Size: 188
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 blux-reg
@@ -407,222 +399,148 @@ Licensed under the Apache License, Version 2.0. See LICENSE-APACHE for details.
 
 FILE: README.md
 Kind: text
-Size: 15920
-Last modified: 2026-01-20T13:55:06Z
+Size: 4656
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 # BLUX-Reg
 
-> **Identity and Trust Backbone for the BLUX Ecosystem**  
-> Local-first cryptographic verification for projects, plugins, and users.
+> **Trust Kernel for Capability Tokens**  
+> Local-first cryptographic issuance, verification, provenance, and revocation.
 
 [![License](https://img.shields.io/badge/License-Dual-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://python.org)
-[![Cryptography](https://img.shields.io/badge/Crypto-Ed25519%20%7C%20Argon2-green.svg)](#cryptographic-foundation)
+[![Cryptography](https://img.shields.io/badge/Crypto-Ed25519-green.svg)](#cryptographic-foundation)
 
 ---
 
 ## 🎯 Overview
 
-BLUX-Reg is the cryptographic trust layer that unifies project validation, plugin signing, and user verification across the BLUX ecosystem. Built on modern cryptography and append-only ledgers, it enables secure, local-first identity management without requiring centralized infrastructure.
+BLUX-Reg is the **engine-free trust kernel** for the BLUX ecosystem. It issues and verifies capability tokens, maintains append-only provenance records, and manages revocations for offline verification. It does **not** execute work, enforce policy, route requests, or judge outcomes.
 
-**Core Capabilities:**
-- 🔐 **Cryptographic Identity** - Ed25519 keypairs protected by Argon2 passphrases
-- 📓 **Tamper-Evident Ledgers** - Append-only JSONL audit trails with hash chains
-- 🛡️ **Offline Verification** - Air-gapped artifact validation with embedded proofs
-- 🎟️ **Capability Tokens** - Offline-verifiable, time-bound delegation tokens
-- ♻️ **Revocable Trust** - Ecosystem-wide key revocation with audit trails
-- 🤝 **Ecosystem Integration** - Native compatibility with BLUX-Quantum and BLUX-Guard
+**Scope guarantees:**
+- ✅ Issues/verifies capability tokens and verification reports.
+- ✅ Maintains append-only provenance and revocation data.
+- ❌ Does not execute, enforce, route, or judge.
+- ❌ Does not emit guard receipts or authorization decisions.
+- ❌ Does not copy canonical contracts (references `blux://` IDs only).
 
----
-
-## ✨ Highlights
-
-### 🛡️ Role-Specific Keys
-Generate dedicated keypairs for different trust contexts:
-- **Project Keys** - For official project releases and distributions
-- **Plugin Keys** - For extension and module signing
-- **User Keys** - For personal identity and contribution verification
-
-All keys use Ed25519 signatures with Argon2-protected passphrases for defense against brute-force attacks.
-
-### 📓 Append-Only Audit Ledgers
-Every trust operation is recorded in immutable JSONL ledgers:
-- `keys.jsonl` - Key issuance and registration events
-- `artifacts.jsonl` - Signed artifacts with compatibility metadata
-- `revocations.jsonl` - Key revocation log with audit trail
-
-Each record is hashed into a tamper-evident chain, enabling cryptographic verification of the entire trust history.
-
-### 🔐 Offline Trust Model
-Signatures are self-contained and include:
-- Cryptographic signature
-- Public key for verification
-- Ledger membership proof
-- Compatibility metadata
-
-This enables artifact validation without network access or centralized registries.
-
-### 🎟️ Capability Tokens
-Issue scoped, time-bound tokens to delegate actions without sharing secrets:
-- Signed with Ed25519 and verified offline
-- Bound to a capability name, audience repo, and constraints
-- Referenced by `capability_token_ref` hash inside envelopes
-
-### ♻️ Revocable Identities
-Compromised or expired keys can be revoked with:
-- Timestamped revocation records
-- Reason and authority documentation
-- Ecosystem-wide propagation through ledger synchronization
-
-### 🤝 BLUX Ecosystem Integration
-Built-in compatibility metadata ensures seamless integration with:
-- **BLUX-Quantum** - Quantum-resistant cryptographic operations
-- **BLUX-Guard** - Security monitoring and threat detection
-- **BLUX Core** - Project orchestration and workflow automation
+**Outputs are limited to:** token artifacts and verification reports (no receipts).
 
 ---
 
-## 🚀 Getting Started
+## ✨ Core Capabilities
+
+- 🎟️ **Capability Tokens** - Deterministic, offline-verifiable tokens with constraints.
+- 📓 **Append-Only Provenance** - Hash-chained JSONL ledgers for audits.
+- ♻️ **Revocation** - Token revocations recorded as append-only events.
+- 🧭 **Offline Verification** - No network dependency for validation.
+
+---
+
+## 🔐 Token Format (Deterministic)
+
+Tokens are canonical JSON (sorted keys, no extra whitespace). The signed payload excludes the `signature` field.
+
+```json
+{
+  "schema_version": "1.0",
+  "token_type": "capability",
+  "issued_at": "2025-01-01T00:00:00+00:00",
+  "expires_at": "2025-01-02T00:00:00+00:00",
+  "ttl_seconds": 86400,
+  "capability": "publish",
+  "audience": "outer-void/blux-example",
+  "constraints": {
+    "scope": "release"
+  },
+  "issuer": {
+    "key_name": "issuer",
+    "fingerprint": "<sha256 raw public key>",
+    "public_key": "<pem public key>"
+  },
+  "signature": "<base64 ed25519 signature>"
+}
+```
+
+Token reference (`token_hash`) = SHA-256 of canonical JSON including the signature.
+
+---
+
+## 🧾 Trust Store (Append-Only)
+
+The trust store is a local JSONL file with a hash chain. It contains:
+- **Trust anchors**: issuer public keys + fingerprints.
+- **Token revocations**: `token_hash` + reason.
+
+This store is append-only, local-first, and auditable. It contains no user identity data by default.
+
+---
+
+## 🚀 Quick Start
 
 ### Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/Outer-Void/blux-reg.git
-cd blux-reg
-
-# Install dependencies
 pip install -r requirements.txt
-
-# For development
-pip install -r requirements-dev.txt
 ```
 
-### Quick Start
+### CLI (Token CRUD + Verification Reports)
 
 ```bash
-# Initialize directories and ledgers
-bin/blux-reg init
-
-# Create a project key (prompts for a new passphrase)
-bin/blux-reg keys create my-project project
-
-# List all registered keys
-bin/blux-reg keys list
-
-# Export a public key for distribution
-bin/blux-reg keys export my-project --key-type project
-```
-
-### Signing Artifacts
-
-```bash
-# Sign a release artifact
-bin/blux-reg sign path/to/artifact.zip my-project project "release"
-
-# Sign with additional metadata
-bin/blux-reg sign plugin.tar.gz plugin-dev plugin "v1.2.3" \
-  --metadata '{"compatible_versions": ["1.0", "2.0"]}'
-```
-
-### Verifying Artifacts
-
-```bash
-# Verify an artifact manifest offline
-bin/blux-reg verify-manifest path/to/artifact.blux-manifest.json
-```
-
-### Capability Tokens
-
-```bash
-# Issue a token for a repository capability
-bin/blux-reg issue my-project publish Outer-Void/blux-guard 3600 \
+# Issue a token
+bin/blux-reg issue issuer publish outer-void/blux-example 3600 \
   --constraints '{"scope":"release"}'
 
-# Hash a token (deterministic reference)
+# Hash a token
 bin/blux-reg hash /path/to/token.json
 
-# Verify a token offline
+# Verify a token
 bin/blux-reg verify /path/to/token.json
 
-# Revoke a token by hash
-bin/blux-reg revoke <token_hash> --revoker security-team
+# Revoke a token
+bin/blux-reg revoke <token_hash> --reason "compromised"
 ```
 
-### Key Management
+### Python API
 
-```bash
-# Revoke a compromised key
-bin/blux-reg keys revoke my-project \
-  --reason "key-compromise" \
-  --revoker security-team
+```python
+from pathlib import Path
+from blux_reg import issue_token, verify_token, load_trust_store, save_trust_store
+from blux_reg import crypto
+from blux_reg.trust_store import new_trust_anchor
 
-# Rotate keys (revoke old, create new)
-bin/blux-reg keys rotate my-project project
+crypto.generate_keypair("issuer")
+store_path = Path("./trust_store.jsonl")
+store = load_trust_store(store_path)
 
-# Export key for backup (encrypted with passphrase)
-bin/blux-reg keys export my-project --include-private --output backup.key
+public_key = crypto.load_public_key("issuer")
+public_pem = crypto.export_key("issuer", public=True).decode("utf-8")
+store.add_entry(new_trust_anchor(crypto.fingerprint_public_key(public_key), public_pem))
+save_trust_store(store_path, store)
+
+artifact = issue_token(
+    {"capability": "publish", "audience": "outer-void/blux-example"},
+    issuer_key="issuer",
+    ttl=3600,
+)
+report = verify_token(artifact["token"], store_path)
+print(report)
 ```
-
-### Ledger Operations
-
-```bash
-# Inspect ledger integrity
-bin/blux-reg audit artifacts
-
-# Verify complete ledger chain
-bin/blux-reg audit keys --verify-chain
-
-# Export ledger for replication
-bin/blux-reg ledger export --output registry-backup.tar.gz
-
-# Sync ledgers between systems
-bin/blux-reg ledger sync --remote user@server:/blux-reg/registry/
-```
-
-### Envelope Reference
-
-Artifacts that require delegated capabilities should reference issued tokens by hash:
-
-```json
-{
-  "capability_token_ref": "<sha256 hash of canonical token JSON>"
-}
-```
-
-### Token Lifecycle
-
-1. **Issue** a token offline with a capability and audience.
-2. **Hash** the token to compute the deterministic reference (`token_hash`).
-3. **Verify** the token offline using the embedded public key.
-4. **Revoke** the token hash if access must be withdrawn.
 
 ---
 
 ## 📁 Directory Structure
 
 ```
-~/blux-reg/
-├── registry/                    # Append-only ledgers
-│   ├── keys.jsonl              # Key issuance events
-│   ├── artifacts.jsonl         # Signed artifacts + metadata
-│   └── revocations.jsonl       # Key revocation log
-├── signatures/                  # Detached signature bundles
-│   └── *.sig.json              # Self-contained signature files
-├── keys/                        # Encrypted private keys (optional)
-└── config/                      # Configuration files
-    └── blux-reg.yaml           # System configuration
-```
-
-### Ledger Format
-
-Each ledger uses JSON Lines format for append-only operation:
-
-```json
-{"type": "key_issuance", "timestamp": "2025-01-15T10:30:00Z", "key_id": "proj-abc123", "key_type": "project", "public_key": "...", "hash_prev": "..."}
-{"type": "artifact_signed", "timestamp": "2025-01-15T11:00:00Z", "artifact_hash": "sha256:...", "key_id": "proj-abc123", "signature": "...", "hash_prev": "..."}
-{"type": "key_revoked", "timestamp": "2025-01-15T12:00:00Z", "key_id": "proj-abc123", "reason": "compromised", "revoker": "security", "hash_prev": "..."}
+~/.config/blux-reg/
+├── trust/
+│   ├── ledger.jsonl             # Append-only provenance ledger
+│   ├── tokens/                  # Issued token artifacts
+│   ├── token_revocations.jsonl  # Legacy token revocations (append-only)
+│   └── trust_store.jsonl        # Trust anchors + revocations (append-only)
+├── keys/                        # Local issuer keys
+└── manifests/                   # Artifact manifests (optional provenance)
 ```
 
 ---
@@ -630,402 +548,31 @@ Each ledger uses JSON Lines format for append-only operation:
 ## 🔐 Cryptographic Foundation
 
 ### Key Generation
-- **Algorithm:** Ed25519 (Edwards-curve Digital Signature Algorithm)
-- **Key Size:** 256-bit private keys, 256-bit public keys
-- **Performance:** ~6,000 signatures/sec, ~15,000 verifications/sec
-
-### Passphrase Protection
-- **KDF:** Argon2id (memory-hard, GPU-resistant)
-- **Parameters:** 
-  - Memory: 64 MB
-  - Iterations: 3
-  - Parallelism: 4 threads
-  - Salt: 16-byte random
-
-### Signature Format
-```json
-{
-  "version": "1.0",
-  "algorithm": "Ed25519",
-  "key_id": "project-id",
-  "key_type": "project",
-  "public_key": "base64-encoded-public-key",
-  "signature": "base64-encoded-signature",
-  "artifact_hash": "sha256:...",
-  "timestamp": "2025-01-15T10:30:00Z",
-  "metadata": {
-    "compatible_with": ["blux-quantum", "blux-guard"],
-    "version": "1.2.3"
-  }
-}
-```
+- **Algorithm:** Ed25519 (deterministic signatures)
+- **Fingerprints:** SHA-256 of raw public key bytes
 
 ---
 
-## 🔄 Workflow Examples
+## 📜 Contract Referencing
 
-### Project Release Workflow
-
-```bash
-# 1. Initialize project key (once)
-bin/blux-reg keys create myproject project
-
-# 2. Build release artifact
-make build  # Creates dist/myproject-1.0.0.tar.gz
-
-# 3. Sign the release
-bin/blux-reg sign dist/myproject-1.0.0.tar.gz myproject project "1.0.0"
-
-# 4. Distribute both artifact and signature
-# - dist/myproject-1.0.0.tar.gz
-# - ~/blux-reg/signatures/myproject-1.0.0.tar.gz.sig.json
-
-# 5. Users verify before installation
-bin/blux-reg verify myproject-1.0.0.tar.gz
-```
-
-### Plugin Development Workflow
-
-```bash
-# Developer creates plugin key
-bin/blux-reg keys create my-plugin plugin
-
-# Sign plugin bundle
-bin/blux-reg sign my-plugin.zip my-plugin plugin "1.0"
-
-# Export public key for distribution
-bin/blux-reg keys export my-plugin --output my-plugin.pub
-
-# Users import plugin developer's public key
-bin/blux-reg keys import my-plugin.pub
-
-# Verify plugin before installation
-bin/blux-reg verify my-plugin.zip
-```
-
-### Multi-Signer Workflow
-
-```bash
-# Multiple maintainers can sign releases
-bin/blux-reg sign release.tar.gz maintainer-1 project "v2.0"
-bin/blux-reg sign release.tar.gz maintainer-2 project "v2.0"
-
-# Verification requires threshold signatures
-bin/blux-reg verify release.tar.gz --require-signers 2
-```
-
----
-
-## 🔍 Audit and Compliance
-
-### Ledger Integrity
-
-```bash
-# Verify all ledger hash chains
-bin/blux-reg audit --all
-
-# Detect tampering attempts
-bin/blux-reg audit --check-integrity
-
-# Generate audit report
-bin/blux-reg audit --report --output audit-report.json
-```
-
-### Trust Chain Verification
-
-```bash
-# Trace an artifact's trust chain
-bin/blux-reg trace artifact.zip
-
-# Show all keys that signed an artifact
-bin/blux-reg show-signers artifact.zip
-
-# List all artifacts signed by a key
-bin/blux-reg list-signatures --key-id myproject
-```
-
-### Compliance Export
-
-```bash
-# Export complete trust history
-bin/blux-reg export --format compliance --output trust-archive.zip
-
-# Generate cryptographic proof bundle
-bin/blux-reg proof artifact.zip --output artifact-proof.json
-```
-
----
-
-## 🛠️ Advanced Usage
-
-### Custom Metadata
-
-Embed compatibility and versioning data in signatures:
-
-```bash
-bin/blux-reg sign plugin.zip my-plugin plugin "1.0" \
-  --metadata '{
-    "compatible_with": ["blux-guard>=0.5"],
-    "requires": ["python>=3.9"],
-    "platform": ["linux", "macos"],
-    "checksum_algorithm": "sha256"
-  }'
-```
-
-### Batch Operations
-
-```bash
-# Sign multiple artifacts
-for file in dist/*.tar.gz; do
-  bin/blux-reg sign "$file" myproject project "1.0"
-done
-
-# Verify directory of artifacts
-bin/blux-reg verify-batch dist/ --recursive
-```
-
-### Integration with CI/CD
-
-```yaml
-# .github/workflows/release.yml
-- name: Sign Release
-  run: |
-    echo "$SIGNING_KEY" | bin/blux-reg keys import --stdin
-    bin/blux-reg sign dist/release.tar.gz ci-bot project "$VERSION"
-    
-- name: Upload Signature
-  uses: actions/upload-artifact@v3
-  with:
-    name: signatures
-    path: ~/blux-reg/signatures/
-```
-
----
-
-## 🔗 Ecosystem Integration
-
-### BLUX-Guard Integration
-
-BLUX-Reg provides cryptographic verification for BLUX-Guard's security policies:
-
-```bash
-# Sign security policy
-bin/blux-reg sign security-policy.yaml security-team project "1.0"
-
-# BLUX-Guard verifies before applying
-blux-guard verify-policy security-policy.yaml
-```
-
-### BLUX-Quantum Integration
-
-Post-quantum cryptographic algorithms are supported through metadata:
-
-```bash
-bin/blux-reg sign artifact.zip my-key project "1.0" \
-  --quantum-resistant \
-  --metadata '{"pq_algorithm": "dilithium3"}'
-```
-
----
-
-## 📚 API and Library Usage
-
-### Python API
-
-```python
-from blux_reg import Registry, KeyType
-
-# Initialize registry
-registry = Registry("~/blux-reg")
-
-# Create and register a key
-key = registry.create_key("my-project", KeyType.PROJECT, passphrase="secret")
-
-# Sign an artifact
-signature = registry.sign_artifact(
-    "artifact.zip",
-    key_id="my-project",
-    key_type=KeyType.PROJECT,
-    metadata={"version": "1.0.0"}
-)
-
-# Verify an artifact
-is_valid = registry.verify_artifact("artifact.zip", signature)
-```
-
----
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**"Key not found" error**
-```bash
-# List all registered keys
-bin/blux-reg keys list
-
-# Check key exists in ledger
-grep "key_id" ~/blux-reg/registry/keys.jsonl
-```
-
-**Verification fails**
-```bash
-# Check signature file exists
-ls ~/blux-reg/signatures/
-
-# Verify ledger integrity first
-bin/blux-reg audit keys
-
-# Check for revocations
-bin/blux-reg keys list --show-revoked
-```
-
-**Passphrase not working**
-```bash
-# Reset passphrase (requires old passphrase)
-bin/blux-reg keys change-passphrase my-key
-
-# Emergency key recovery (if backed up)
-bin/blux-reg keys recover --from-backup backup.key
-```
-
----
-
-## 🗺️ Roadmap
-
-| Phase | Feature | Status |
-|-------|---------|--------|
-| **v0.1** | Basic Ed25519 signing | ✅ Complete |
-| **v0.2** | Append-only ledgers | ✅ Complete |
-| **v0.3** | Key revocation | ✅ Complete |
-| **v0.4** | Multi-signature support | 🚧 In Progress |
-| **v0.5** | Post-quantum algorithms | 📋 Planned |
-| **v0.6** | Distributed ledger sync | 📋 Planned |
-| **v1.0** | Complete ecosystem integration | 📋 Planned |
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! To get started:
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Make your changes and add tests
-4. Run the test suite: `pytest tests/`
-5. Commit with signed commits: `git commit -S -m "Add feature"`
-6. Push and create a pull request
-
-### Development Setup
-
-```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-pytest tests/ -v
-
-# Run linters
-black blux_reg/
-flake8 blux_reg/
-mypy blux_reg/
-
-# Build documentation
-cd docs && make html
-```
-
----
-
-## 🔐 Security
-
-### Reporting Vulnerabilities
-
-**DO NOT** open public issues for security vulnerabilities.
-
-Instead, email security details to: **theoutervoid@outlook.com**
-
-We will respond within 48 hours and coordinate disclosure.
-
-### Security Best Practices
-
-1. **Never commit private keys** to version control
-2. **Use strong passphrases** (minimum 20 characters)
-3. **Backup keys securely** with encrypted storage
-4. **Rotate keys regularly** (every 6-12 months)
-5. **Verify all artifacts** before execution
-6. **Monitor ledgers** for unauthorized entries
-
----
-
-## ⚖️ Licensing
-
-BLUX-Reg is dual-licensed:
-
-- **Open-source use:** [Apache License 2.0](LICENSE-APACHE)
-- **Commercial use:** Requires separate agreement (see [LICENSE-COMMERCIAL](LICENSE-COMMERCIAL))
-
-### Apache 2.0 Usage
-
-You may use, modify, and redistribute the software for open and internal purposes, provided that you preserve notices, include the license, and accept the disclaimers of warranty and liability.
-
-### Commercial Usage
-
-Commercial use—such as embedding in paid products, offering hosted services, or other monetized deployments—requires a commercial license. Please review [COMMERCIAL.md](COMMERCIAL.md) for details and contact **theoutervoid@outlook.com** to arrange terms.
-
----
-
-## 📖 Documentation
-
-- **[API Reference](docs/api/)** - Complete Python API documentation
-- **[Security Model](docs/security.md)** - Cryptographic design and threat model
-- **[Ledger Specification](docs/ledger-spec.md)** - JSONL format and hash chain structure
-- **[Integration Guide](docs/integration.md)** - Integrating with BLUX ecosystem
-- **[Migration Guide](docs/migration.md)** - Upgrading from previous versions
-
----
-
-## 💬 Support
-
-- **Issues:** [GitHub Issues](https://github.com/Outer-Void/blux-reg/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/Outer-Void/blux-reg/discussions)
-- **Email:** outervoid.blux@gmail.com
-
----
-
-## 🙏 Acknowledgments
-
-BLUX-Reg is built on:
-- **PyNaCl** - Python bindings for libsodium
-- **Argon2** - Password hashing library
-- **jsonlines** - JSON Lines format support
-
----
-
-## 📄 License
-
-Dual-licensed under Apache-2.0 OR Commercial License.  
-See [LICENSE](LICENSE), [LICENSE-APACHE](LICENSE-APACHE), and [LICENSE-COMMERCIAL](LICENSE-COMMERCIAL) for details.
-
----
-
-**BLUX-Reg** — *Trust, verified. Locally.*
+Canonical BLUX contracts live in the `blux-ecosystem` repository. BLUX-Reg only references them by `blux://` IDs in documentation or tests and never copies contract definitions into this repository.
 
 FILE: ROLE.md
 Kind: text
-Size: 175
-Last modified: 2026-01-20T13:55:06Z
+Size: 147
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 # ROLE
 
-BLUX-Reg is a trust kernel for capability tokens only: it issues, hashes, verifies, and revokes tokens offline.
+BLUX-Reg is a trust kernel for capability tokens, provenance, and revocation only.
 
-No policy decisions; no judgment logic; no execution.
+No execution, no routing, no enforcement, no judgment.
 
 FILE: bin/blux-reg
 Kind: text
 Size: 365
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 #!/usr/bin/env python3
@@ -1044,1063 +591,23 @@ from blux_reg.cli import app
 if __name__ == "__main__":
     raise SystemExit(app())
 
-FILE: blux_reg/__init__.py
-Kind: text
-Size: 315
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-"""BLUX-Reg core package."""
-
-from .tokens import (
-    issue_capability_token,
-    load_token,
-    revoke_capability_token,
-    show_token,
-    verify_capability_token,
-)
-
-__all__ = [
-    "issue_capability_token",
-    "load_token",
-    "revoke_capability_token",
-    "show_token",
-    "verify_capability_token",
-]
-
-FILE: blux_reg/cli.py
-Kind: text
-Size: 9946
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-from __future__ import annotations
-
-import argparse
-import json
-import sys
-from getpass import getpass
-from pathlib import Path
-
-from .crypto import PassphraseError
-from .keystore import KeyStore
-from .ledger import LEDGERS, get_ledger
-from .registry import (
-    create_key,
-    ensure_structure,
-    export_public_key,
-    list_keys,
-    revoke_key,
-    sign_artifact,
-    verify_artifact,
-)
-from .tokens import issue_capability_token, load_token, revoke_capability_token, show_token, verify_capability_token
-
-KEY_TYPES = {"project", "plugin", "user"}
-
-
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="BLUX-Reg identity and trust CLI")
-    sub = parser.add_subparsers(dest="cmd")
-
-    sub.add_parser("init", help="initialise BLUX-Reg directories and ledgers")
-
-    keys = sub.add_parser("keys", help="manage key material")
-    keys_sub = keys.add_subparsers(dest="keys_cmd")
-
-    create = keys_sub.add_parser("create", help="create a new Ed25519 keypair")
-    create.add_argument("key_id", help="identifier for the key (e.g. project slug)")
-    create.add_argument("key_type", choices=sorted(KEY_TYPES), help="key classification")
-    create.add_argument("--passphrase", help="passphrase protecting the key (optional)")
-
-    keys_sub.add_parser("list", help="list known keys")
-
-    export = keys_sub.add_parser("export", help="export a public key as JSON")
-    export.add_argument("key_id")
-    export.add_argument("--key-type", choices=sorted(KEY_TYPES))
-
-    revoke = keys_sub.add_parser("revoke", help="revoke a key via append-only ledger")
-    revoke.add_argument("key_id")
-    revoke.add_argument("--reason", default="unspecified")
-    revoke.add_argument("--revoker", required=True, help="identifier authorising the revocation")
-
-    sign_parser = sub.add_parser("sign", help="sign an artifact and append to ledger")
-    sign_parser.add_argument("path", type=Path)
-    sign_parser.add_argument("key_id")
-    sign_parser.add_argument("key_type", choices=sorted(KEY_TYPES))
-    sign_parser.add_argument("context", help="description of what is being signed (project/plugin/user)")
-    sign_parser.add_argument("--passphrase")
-
-    verify_parser = sub.add_parser("verify", help="offline verification of a signed artifact")
-    verify_parser.add_argument("path", type=Path)
-    verify_parser.add_argument("--signature", type=Path, help="explicit signature JSON to verify")
-
-    chain_parser = sub.add_parser("audit", help="inspect ledger health")
-    chain_parser.add_argument("ledger", choices=sorted(LEDGERS.keys()))
-
-    token_parser = sub.add_parser("token", help="manage capability tokens")
-    token_sub = token_parser.add_subparsers(dest="token_cmd")
-
-    token_issue = token_sub.add_parser("issue", help="issue a capability token")
-    token_issue.add_argument("key_id")
-    token_issue.add_argument("key_type", choices=sorted(KEY_TYPES))
-    token_issue.add_argument("capability", help="capability name")
-    token_issue.add_argument("audience_repo", help="audience repository")
-    token_issue.add_argument("ttl_seconds", type=int, help="token lifetime in seconds")
-    token_issue.add_argument("--constraints", default="{}", help="JSON constraints object")
-    token_issue.add_argument("--passphrase")
-
-    token_verify = token_sub.add_parser("verify", help="verify a capability token")
-    token_verify.add_argument("token_path", type=Path)
-
-    token_revoke = token_sub.add_parser("revoke", help="revoke a capability token")
-    token_revoke.add_argument("token_hash")
-    token_revoke.add_argument("--reason", default="unspecified")
-    token_revoke.add_argument("--revoker", required=True)
-
-    token_show = token_sub.add_parser("show", help="show a capability token")
-    token_show.add_argument("token_path", type=Path)
-
-    return parser
-
-
-def handle_init(args: argparse.Namespace) -> int:
-    ensure_structure()
-    print("[*] BLUX-Reg directories ready")
-    for name, ledger in LEDGERS.items():
-        print(f"    - ledger {name}: {ledger.path}")
-    return 0
-
-
-def prompt_passphrase(existing: bool = False, provided: str | None = None) -> str:
-    if provided is not None:
-        return provided
-    prompt = "Passphrase: " if existing else "New passphrase: "
-    confirm = "Confirm passphrase: "
-    pwd = getpass(prompt)
-    if not existing:
-        confirm_pwd = getpass(confirm)
-        if pwd != confirm_pwd:
-            raise ValueError("Passphrases did not match")
-    if not pwd:
-        raise ValueError("Passphrase may not be empty")
-    return pwd
-
-
-def handle_keys(args: argparse.Namespace) -> int:
-    ks = KeyStore()
-    if args.keys_cmd == "create":
-        try:
-            passphrase = prompt_passphrase(provided=args.passphrase)
-        except ValueError as exc:
-            print(f"error: {exc}", file=sys.stderr)
-            return 1
-        material = create_key(args.key_id, args.key_type, passphrase, keystore=ks)
-        print(f"[+] Created {args.key_type} key '{args.key_id}'")
-        print(json.dumps(export_public_key(material), indent=2, sort_keys=True))
-        return 0
-    if args.keys_cmd == "list":
-        rows = list(list_keys(keystore=ks))
-        if not rows:
-            print("(no keys found)")
-            return 0
-        for material in rows:
-            print(f"- {material.key_id} [{material.key_type}] created {material.created_at}")
-        return 0
-    if args.keys_cmd == "export":
-        try:
-            material = ks.load(args.key_id, args.key_type)
-        except FileNotFoundError as exc:
-            print(str(exc), file=sys.stderr)
-            return 1
-        print(json.dumps(export_public_key(material), indent=2, sort_keys=True))
-        return 0
-    if args.keys_cmd == "revoke":
-        entry = revoke_key(args.key_id, args.reason, args.revoker)
-        print(f"[!] Revoked key {args.key_id} (chain hash: {entry.chain_hash})")
-        return 0
-    print("usage: blux-reg keys [create|list|export|revoke]", file=sys.stderr)
-    return 1
-
-
-def handle_sign(args: argparse.Namespace) -> int:
-    try:
-        passphrase = prompt_passphrase(existing=True, provided=args.passphrase)
-    except ValueError as exc:
-        print(f"error: {exc}", file=sys.stderr)
-        return 1
-    try:
-        signature_path = sign_artifact(args.key_id, args.key_type, args.path, passphrase, args.context)
-    except FileNotFoundError:
-        print(f"artifact {args.path} not found", file=sys.stderr)
-        return 1
-    except PassphraseError as exc:
-        print(str(exc), file=sys.stderr)
-        return 1
-    print(f"[+] Signed artifact -> {signature_path}")
-    return 0
-
-
-def handle_verify(args: argparse.Namespace) -> int:
-    try:
-        outcome = verify_artifact(args.path, args.signature)
-    except Exception as exc:
-        print(f"verification failed: {exc}", file=sys.stderr)
-        return 1
-    print(json.dumps(outcome, indent=2, sort_keys=True))
-    return 0
-
-
-def handle_audit(args: argparse.Namespace) -> int:
-    ledger = get_ledger(args.ledger)
-    ok = ledger.verify_chain()
-    print(f"Ledger {args.ledger}: {'OK' if ok else 'BROKEN'}")
-    print(f"Entries: {len(ledger.entries())}")
-    return 0 if ok else 2
-
-
-def _parse_constraints(raw: str) -> dict:
-    try:
-        data = json.loads(raw)
-    except json.JSONDecodeError as exc:
-        raise ValueError(f"Invalid constraints JSON: {exc}") from exc
-    if not isinstance(data, dict):
-        raise ValueError("Constraints must be a JSON object")
-    return data
-
-
-def handle_token(args: argparse.Namespace) -> int:
-    if args.token_cmd == "issue":
-        try:
-            passphrase = prompt_passphrase(existing=True, provided=args.passphrase)
-            constraints = _parse_constraints(args.constraints)
-        except ValueError as exc:
-            print(f"error: {exc}", file=sys.stderr)
-            return 1
-        try:
-            token, token_hash, path = issue_capability_token(
-                args.key_id,
-                args.key_type,
-                passphrase,
-                args.capability,
-                args.audience_repo,
-                args.ttl_seconds,
-                constraints,
-            )
-        except (FileNotFoundError, PassphraseError, ValueError) as exc:
-            print(str(exc), file=sys.stderr)
-            return 1
-        print(json.dumps({"token_hash": token_hash, "token_path": str(path), "token": token}, indent=2))
-        return 0
-    if args.token_cmd == "verify":
-        try:
-            token = load_token(args.token_path)
-            outcome = verify_capability_token(token)
-        except Exception as exc:
-            print(f"verification failed: {exc}", file=sys.stderr)
-            return 1
-        print(json.dumps(outcome, indent=2, sort_keys=True))
-        return 0
-    if args.token_cmd == "revoke":
-        revoke_capability_token(args.token_hash, args.reason, args.revoker)
-        print(f"[!] Revoked token {args.token_hash}")
-        return 0
-    if args.token_cmd == "show":
-        try:
-            payload = show_token(args.token_path)
-        except FileNotFoundError as exc:
-            print(str(exc), file=sys.stderr)
-            return 1
-        print(json.dumps(payload, indent=2, sort_keys=True))
-        return 0
-    print("usage: blux-reg token [issue|verify|revoke|show]", file=sys.stderr)
-    return 1
-
-
-def main(argv: list[str] | None = None) -> int:
-    parser = build_parser()
-    args = parser.parse_args(argv)
-    if args.cmd is None:
-        parser.print_help()
-        return 1
-    if args.cmd == "init":
-        return handle_init(args)
-    if args.cmd == "keys":
-        return handle_keys(args)
-    if args.cmd == "sign":
-        return handle_sign(args)
-    if args.cmd == "verify":
-        return handle_verify(args)
-    if args.cmd == "audit":
-        return handle_audit(args)
-    if args.cmd == "token":
-        return handle_token(args)
-    parser.print_help()
-    return 1
-
-
-if __name__ == "__main__":  # pragma: no cover
-    sys.exit(main())
-
-FILE: blux_reg/crypto.py
-Kind: text
-Size: 2601
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-from __future__ import annotations
-
-import base64
-from dataclasses import dataclass
-from datetime import datetime, timezone
-from typing import Optional
-
-from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError
-from nacl import signing
-
-from .ledger import canonical_bytes
-
-PASSWORD_HASHER = PasswordHasher(time_cost=3, memory_cost=2**16, parallelism=2, hash_len=32, salt_len=16)
-
-
-@dataclass
-class KeyMaterial:
-    key_id: str
-    key_type: str
-    created_at: str
-    public_key: str
-    private_seed: str
-    argon2_hash: str
-    compatibility: dict
-
-    def signing_key(self, passphrase: Optional[str] = None) -> signing.SigningKey:
-        seed = base64.b64decode(self.private_seed)
-        if passphrase is not None:
-            verify_passphrase(self.argon2_hash, passphrase)
-        return signing.SigningKey(seed)
-
-    def verify_key(self) -> signing.VerifyKey:
-        raw_public = base64.b64decode(self.public_key)
-        return signing.VerifyKey(raw_public)
-
-
-class PassphraseError(Exception):
-    pass
-
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-
-
-def generate_ed25519(passphrase: str, key_id: str, key_type: str, compatibility: Optional[dict] = None) -> KeyMaterial:
-    signing_key = signing.SigningKey.generate()
-    verify_key = signing_key.verify_key
-    private_seed = signing_key.encode()
-    public_bytes = verify_key.encode()
-    argon_hash = PASSWORD_HASHER.hash(passphrase)
-    return KeyMaterial(
-        key_id=key_id,
-        key_type=key_type,
-        created_at=now_iso(),
-        public_key=base64.b64encode(public_bytes).decode("ascii"),
-        private_seed=base64.b64encode(private_seed).decode("ascii"),
-        argon2_hash=argon_hash,
-        compatibility=compatibility or {},
-    )
-
-
-def verify_passphrase(stored_hash: str, candidate: str) -> None:
-    try:
-        PASSWORD_HASHER.verify(stored_hash, candidate)
-    except VerifyMismatchError as exc:
-        raise PassphraseError("Invalid passphrase") from exc
-
-
-def sign_payload(material: KeyMaterial, payload: dict, passphrase: str) -> str:
-    signing_key = material.signing_key(passphrase)
-    signature = signing_key.sign(canonical_bytes(payload)).signature
-    return base64.b64encode(signature).decode("ascii")
-
-
-def verify_signature(public_key_b64: str, payload: dict, signature_b64: str) -> bool:
-    verify_key = signing.VerifyKey(base64.b64decode(public_key_b64))
-    try:
-        verify_key.verify(canonical_bytes(payload), base64.b64decode(signature_b64))
-        return True
-    except Exception:
-        return False
-
-FILE: blux_reg/doctor.py
-Kind: text
-Size: 1863
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-import importlib
-import sys
-from pathlib import Path
-from typing import List, Tuple
-
-from .paths import CONFIG_ENV, get_artifacts_dir, get_config_root, get_keys_dir, get_ledger_path
-
-
-class DoctorIssue(Exception):
-    pass
-
-
-def _check_python_version(min_major=3, min_minor=10) -> Tuple[bool, str]:
-    major, minor = sys.version_info[:2]
-    ok = (major, minor) >= (min_major, min_minor)
-    return ok, f"Python >= {min_major}.{min_minor} required (found {major}.{minor})"
-
-
-def _check_dependency(module: str) -> Tuple[bool, str]:
-    try:
-        importlib.import_module(module)
-        return True, ""
-    except ImportError:
-        return False, f"Install dependency: pip install {module}"
-
-
-def _check_directory(path: Path) -> Tuple[bool, str]:
-    try:
-        path.mkdir(parents=True, exist_ok=True)
-        test_file = path / ".__blux_perm_test"
-        test_file.write_text("ok")
-        test_file.unlink()
-        return True, ""
-    except Exception as exc:
-        return False, f"Directory not writable: {path} ({exc})"
-
-
-def run_doctor() -> Tuple[bool, List[str]]:
-    messages: List[str] = []
-    checks: List[Tuple[bool, str]] = []
-    checks.append(_check_python_version())
-    checks.append(_check_dependency("cryptography"))
-
-    config_root = get_config_root()
-    keys_dir = get_keys_dir()
-    ledger_dir = get_ledger_path().parent
-    artifacts_dir = get_artifacts_dir()
-
-    for path in [config_root, keys_dir, ledger_dir, artifacts_dir]:
-        checks.append(_check_directory(path))
-
-    ok = True
-    for passed, msg in checks:
-        if not passed:
-            ok = False
-            messages.append(msg)
-    if not ok:
-        messages.append(
-            "Set BLUX_CONFIG_HOME to override config root if needed: "
-            f"export {CONFIG_ENV}=<path>"
-        )
-    return ok, messages
-
-
-__all__ = ["run_doctor", "DoctorIssue"]
-
-FILE: blux_reg/keystore.py
-Kind: text
-Size: 1656
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-from __future__ import annotations
-
-import json
-from dataclasses import asdict
-from pathlib import Path
-from typing import Iterable, Optional
-
-from .crypto import KeyMaterial
-from .paths import KEYSTORE_ROOT
-
-
-class KeyStore:
-    def __init__(self, root: Path = KEYSTORE_ROOT):
-        self.root = root
-        self.root.mkdir(parents=True, exist_ok=True)
-
-    def _path_for(self, key_id: str, key_type: str) -> Path:
-        safe_id = key_id.replace("/", "_")
-        safe_type = key_type.replace("/", "_")
-        return self.root / f"{safe_type}-{safe_id}.json"
-
-    def save(self, material: KeyMaterial) -> Path:
-        path = self._path_for(material.key_id, material.key_type)
-        payload = asdict(material)
-        with path.open("w", encoding="utf-8") as fh:
-            json.dump(payload, fh, indent=2, sort_keys=True)
-        return path
-
-    def load(self, key_id: str, key_type: Optional[str] = None) -> KeyMaterial:
-        candidates = []
-        if key_type:
-            candidates.append(self._path_for(key_id, key_type))
-        else:
-            pattern = f"*-{key_id.replace('/', '_')}.json"
-            candidates.extend(self.root.glob(pattern))
-        for path in candidates:
-            if path.exists():
-                with path.open("r", encoding="utf-8") as fh:
-                    data = json.load(fh)
-                return KeyMaterial(**data)
-        raise FileNotFoundError(f"Key {key_id} not found in keystore")
-
-    def list(self) -> Iterable[KeyMaterial]:
-        for path in sorted(self.root.glob("*.json")):
-            with path.open("r", encoding="utf-8") as fh:
-                yield KeyMaterial(**json.load(fh))
-
-FILE: blux_reg/ledger.py
-Kind: text
-Size: 3362
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-from __future__ import annotations
-
-import json
-import hashlib
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Iterable, Iterator, List, Optional
-
-from .paths import LEDGER_PATHS
-
-CANONICAL_SEPARATORS = (",", ":")
-
-
-def canonical_dumps(data: dict) -> str:
-    return json.dumps(data, sort_keys=True, separators=CANONICAL_SEPARATORS)
-
-
-def canonical_bytes(data: dict) -> bytes:
-    return canonical_dumps(data).encode("utf-8")
-
-
-def sha256_hex(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
-
-
-@dataclass
-class LedgerEntry:
-    raw: dict
-
-    @property
-    def prev_hash(self) -> Optional[str]:
-        return self.raw.get("prev_hash")
-
-    @property
-    def chain_hash(self) -> Optional[str]:
-        return self.raw.get("chain_hash")
-
-    def payload_bytes(self) -> bytes:
-        payload = dict(self.raw)
-        payload.pop("chain_hash", None)
-        return canonical_bytes(payload)
-
-
-class Ledger:
-    def __init__(self, path: Path):
-        self.path = path
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-
-    def _iter_lines(self) -> Iterator[str]:
-        if not self.path.exists():
-            return iter(())
-        with self.path.open("r", encoding="utf-8") as fh:
-            for line in fh:
-                line = line.strip()
-                if line:
-                    yield line
-
-    def entries(self) -> List[LedgerEntry]:
-        return [LedgerEntry(json.loads(line)) for line in self._iter_lines()]
-
-    def last_hash(self) -> Optional[str]:
-        last_line = None
-        for last_line in self._iter_lines():
-            pass
-        if last_line is None:
-            return None
-        payload = json.loads(last_line)
-        payload.pop("chain_hash", None)
-        return sha256_hex(canonical_bytes(payload))
-
-    def append(self, entry: dict) -> LedgerEntry:
-        entry = dict(entry)
-        prev_hash = self.last_hash()
-        if prev_hash:
-            entry.setdefault("prev_hash", prev_hash)
-        elif "prev_hash" in entry and entry["prev_hash"] is None:
-            entry.pop("prev_hash")
-        payload_bytes = canonical_bytes(entry)
-        chain_hash = sha256_hex(payload_bytes)
-        entry_with_hash = dict(entry)
-        entry_with_hash["chain_hash"] = chain_hash
-        line = canonical_dumps(entry_with_hash)
-        with self.path.open("a", encoding="utf-8") as fh:
-            fh.write(line + "\n")
-        return LedgerEntry(entry_with_hash)
-
-    def verify_chain(self) -> bool:
-        prev_hash = None
-        for entry in self.entries():
-            payload = dict(entry.raw)
-            chain_hash = payload.pop("chain_hash", None)
-            payload_bytes = canonical_bytes(payload)
-            computed_hash = sha256_hex(payload_bytes)
-            if computed_hash != chain_hash:
-                return False
-            if prev_hash != payload.get("prev_hash"):
-                if prev_hash is None and payload.get("prev_hash") in (None, ""):
-                    pass
-                else:
-                    return False
-            prev_hash = computed_hash
-        return True
-
-
-LEDGERS = {name: Ledger(path) for name, path in LEDGER_PATHS.items()}
-
-
-def get_ledger(name: str) -> Ledger:
-    try:
-        return LEDGERS[name]
-    except KeyError:
-        raise ValueError(f"Unknown ledger '{name}'. Known: {', '.join(sorted(LEDGERS))}")
-
-FILE: blux_reg/paths.py
-Kind: text
-Size: 577
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-from __future__ import annotations
-
-from pathlib import Path
-
-HOME = Path.home()
-REGROOT = HOME / "blux-reg"
-REGISTRY_ROOT = REGROOT / "registry"
-KEYSTORE_ROOT = HOME / ".config" / "blux-reg" / "keys"
-SIGNATURES_ROOT = REGROOT / "signatures"
-TOKENS_ROOT = REGROOT / "tokens"
-
-LEDGER_PATHS = {
-    "keys": REGISTRY_ROOT / "keys.jsonl",
-    "artifacts": REGISTRY_ROOT / "artifacts.jsonl",
-    "revocations": REGISTRY_ROOT / "revocations.jsonl",
-    "tokens": REGISTRY_ROOT / "tokens.jsonl",
-}
-
-REQUIRED_COMPATIBILITY = {
-    "BLUX-Quantum": ">=1.0",
-    "BLUX-Guard": ">=1.0",
-}
-
-FILE: blux_reg/registry.py
-Kind: text
-Size: 5890
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-from __future__ import annotations
-
-import json
-from pathlib import Path
-from typing import Dict, Iterable, Optional
-
-from .crypto import KeyMaterial, generate_ed25519, now_iso, sign_payload, verify_signature
-from .keystore import KeyStore
-from .ledger import LedgerEntry, get_ledger
-from .paths import LEDGER_PATHS, REQUIRED_COMPATIBILITY, SIGNATURES_ROOT, TOKENS_ROOT
-
-
-def ensure_structure() -> None:
-    SIGNATURES_ROOT.mkdir(parents=True, exist_ok=True)
-    TOKENS_ROOT.mkdir(parents=True, exist_ok=True)
-    for path in LEDGER_PATHS.values():
-        path.parent.mkdir(parents=True, exist_ok=True)
-        if not path.exists():
-            path.touch()
-
-
-def create_key(key_id: str, key_type: str, passphrase: str, keystore: Optional[KeyStore] = None) -> KeyMaterial:
-    ensure_structure()
-    ks = keystore or KeyStore()
-    compatibility = {
-        "BLUX-Quantum": REQUIRED_COMPATIBILITY["BLUX-Quantum"],
-        "BLUX-Guard": REQUIRED_COMPATIBILITY["BLUX-Guard"],
-    }
-    material = generate_ed25519(passphrase, key_id=key_id, key_type=key_type, compatibility=compatibility)
-    ks.save(material)
-    payload = {
-        "event": "key_issued",
-        "timestamp": material.created_at,
-        "key_id": material.key_id,
-        "key_type": material.key_type,
-        "public_key": material.public_key,
-        "compatibility": compatibility,
-    }
-    signature = sign_payload(material, payload, passphrase)
-    get_ledger("keys").append({
-        "timestamp": material.created_at,
-        "issuer": material.key_id,
-        "role": material.key_type,
-        "payload": payload,
-        "signature": signature,
-    })
-    return material
-
-
-def list_keys(keystore: Optional[KeyStore] = None) -> Iterable[KeyMaterial]:
-    ks = keystore or KeyStore()
-    yield from ks.list()
-
-
-def export_public_key(material: KeyMaterial) -> dict:
-    return {
-        "key_id": material.key_id,
-        "key_type": material.key_type,
-        "public_key": material.public_key,
-        "created_at": material.created_at,
-        "compatibility": material.compatibility,
-    }
-
-
-def sign_artifact(
-    key_id: str,
-    key_type: str,
-    path: Path,
-    passphrase: str,
-    context: str,
-    keystore: Optional[KeyStore] = None,
-) -> Path:
-    ensure_structure()
-    ks = keystore or KeyStore()
-    material = ks.load(key_id, key_type)
-    payload = {
-        "event": "artifact_signed",
-        "timestamp": now_iso(),
-        "artifact": {
-            "path": str(path.resolve()),
-            "sha256": compute_file_sha256(path),
-            "context": context,
-        },
-        "key_id": material.key_id,
-        "key_type": material.key_type,
-        "compatibility": material.compatibility,
-    }
-    signature = sign_payload(material, payload, passphrase)
-    entry = {
-        "timestamp": payload["timestamp"],
-        "issuer": material.key_id,
-        "role": material.key_type,
-        "payload": payload,
-        "signature": signature,
-    }
-    get_ledger("artifacts").append(entry)
-    signature_path = SIGNATURES_ROOT / f"{path.name}.sig.json"
-    signature_payload = {
-        "payload": payload,
-        "signature": signature,
-        "public_key": material.public_key,
-    }
-    with signature_path.open("w", encoding="utf-8") as fh:
-        json.dump(signature_payload, fh, indent=2, sort_keys=True)
-    return signature_path
-
-
-def compute_file_sha256(path: Path) -> str:
-    import hashlib
-
-    h = hashlib.sha256()
-    with path.open("rb") as fh:
-        for chunk in iter(lambda: fh.read(65536), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
-def revoke_key(key_id: str, reason: str, revoker: str) -> LedgerEntry:
-    ensure_structure()
-    payload = {
-        "event": "key_revoked",
-        "timestamp": now_iso(),
-        "revoked_key_id": key_id,
-        "reason": reason,
-        "revoker": revoker,
-    }
-    entry = {
-        "timestamp": payload["timestamp"],
-        "issuer": revoker,
-        "role": "revocation",
-        "payload": payload,
-    }
-    return get_ledger("revocations").append(entry)
-
-
-def is_key_revoked(key_id: str) -> bool:
-    ledger = get_ledger("revocations")
-    for entry in ledger.entries():
-        payload = entry.raw.get("payload", {})
-        if payload.get("event") == "key_revoked" and payload.get("revoked_key_id") == key_id:
-            return True
-    return False
-
-
-def verify_artifact(path: Path, signature_path: Optional[Path] = None) -> Dict[str, str]:
-    ensure_structure()
-    if signature_path is None:
-        signature_path = SIGNATURES_ROOT / f"{path.name}.sig.json"
-    if not signature_path.exists():
-        raise FileNotFoundError(f"Signature file {signature_path} not found")
-    with signature_path.open("r", encoding="utf-8") as fh:
-        signed = json.load(fh)
-    payload = signed["payload"]
-    signature = signed["signature"]
-    public_key = signed["public_key"]
-    expected_sha = compute_file_sha256(path)
-    if payload["artifact"]["sha256"] != expected_sha:
-        raise ValueError("Artifact digest mismatch")
-    key_id = payload.get("key_id")
-    if is_key_revoked(key_id):
-        raise ValueError(f"Key {key_id} has been revoked")
-    if not verify_signature(public_key, payload, signature):
-        raise ValueError("Signature verification failed")
-    if not check_ledger_membership(payload, signature):
-        raise ValueError("Signature not present in append-only ledger")
-    return {
-        "status": "verified",
-        "key_id": key_id,
-        "key_type": payload.get("key_type"),
-        "timestamp": payload.get("timestamp"),
-        "context": payload["artifact"].get("context"),
-    }
-
-
-def check_ledger_membership(payload: dict, signature: str) -> bool:
-    ledger = get_ledger("artifacts")
-    for entry in ledger.entries():
-        if entry.raw.get("signature") == signature and entry.raw.get("payload") == payload:
-            return True
-    return False
-
-FILE: blux_reg/tokens.py
-Kind: text
-Size: 6090
-Last modified: 2026-01-20T06:55:50Z
-
-CONTENT:
-from __future__ import annotations
-
-import json
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
-from typing import Any, Dict, Optional
-
-from .crypto import now_iso, sign_payload, verify_signature
-from .keystore import KeyStore
-from .ledger import canonical_bytes, sha256_hex, get_ledger
-from .paths import TOKENS_ROOT
-from .registry import ensure_structure, is_key_revoked
-
-TOKEN_SCHEMA_VERSION = "1.0"
-TOKEN_TYPE = "capability"
-
-REQUIRED_FIELDS = {
-    "schema_version",
-    "token_type",
-    "issued_at",
-    "expires_at",
-    "ttl_seconds",
-    "capability",
-    "audience_repo",
-    "constraints",
-    "issuer",
-    "signature",
-}
-
-
-def _parse_iso(ts: str) -> datetime:
-    return datetime.fromisoformat(ts)
-
-
-def token_ref(token: Dict[str, Any]) -> str:
-    return sha256_hex(canonical_bytes(token))
-
-
-def _payload_from_token(token: Dict[str, Any]) -> Dict[str, Any]:
-    return {k: token[k] for k in token if k != "signature"}
-
-
-def _token_path_for(hash_ref: str) -> Path:
-    return TOKENS_ROOT / f"{hash_ref}.token.json"
-
-
-def issue_capability_token(
-    key_id: str,
-    key_type: str,
-    passphrase: str,
-    capability: str,
-    audience_repo: str,
-    ttl_seconds: int,
-    constraints: Optional[Dict[str, Any]] = None,
-    keystore: Optional[KeyStore] = None,
-    output_path: Optional[Path] = None,
-) -> tuple[Dict[str, Any], str, Path]:
-    if ttl_seconds <= 0:
-        raise ValueError("ttl_seconds must be positive")
-    ensure_structure()
-    TOKENS_ROOT.mkdir(parents=True, exist_ok=True)
-    ks = keystore or KeyStore()
-    material = ks.load(key_id, key_type)
-    issued_at_dt = datetime.now(timezone.utc).replace(microsecond=0)
-    expires_at_dt = issued_at_dt + timedelta(seconds=ttl_seconds)
-    payload = {
-        "schema_version": TOKEN_SCHEMA_VERSION,
-        "token_type": TOKEN_TYPE,
-        "issued_at": issued_at_dt.isoformat(),
-        "expires_at": expires_at_dt.isoformat(),
-        "ttl_seconds": ttl_seconds,
-        "capability": capability,
-        "audience_repo": audience_repo,
-        "constraints": constraints or {},
-        "issuer": {
-            "key_id": material.key_id,
-            "key_type": material.key_type,
-            "public_key": material.public_key,
-            "compatibility": material.compatibility,
-        },
-    }
-    signature = sign_payload(material, payload, passphrase)
-    token = dict(payload)
-    token["signature"] = signature
-    hash_ref = token_ref(token)
-    entry = {
-        "timestamp": payload["issued_at"],
-        "issuer": material.key_id,
-        "role": material.key_type,
-        "token_hash": hash_ref,
-        "payload": payload,
-        "signature": signature,
-    }
-    get_ledger("tokens").append(entry)
-    path = output_path or _token_path_for(hash_ref)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as fh:
-        json.dump(token, fh, indent=2, sort_keys=True)
-    return token, hash_ref, path
-
-
-def load_token(path: Path) -> Dict[str, Any]:
-    with path.open("r", encoding="utf-8") as fh:
-        return json.load(fh)
-
-
-def is_token_revoked(token_hash: str) -> bool:
-    ledger = get_ledger("revocations")
-    for entry in ledger.entries():
-        payload = entry.raw.get("payload", {})
-        if payload.get("event") == "token_revoked" and payload.get("token_hash") == token_hash:
-            return True
-    return False
-
-
-def revoke_capability_token(token_hash: str, reason: str, revoker: str):
-    ensure_structure()
-    payload = {
-        "event": "token_revoked",
-        "timestamp": now_iso(),
-        "token_hash": token_hash,
-        "reason": reason,
-        "revoker": revoker,
-    }
-    entry = {
-        "timestamp": payload["timestamp"],
-        "issuer": revoker,
-        "role": "revocation",
-        "payload": payload,
-    }
-    return get_ledger("revocations").append(entry)
-
-
-def check_token_ledger_membership(token_hash: str, payload: Dict[str, Any], signature: str) -> bool:
-    ledger = get_ledger("tokens")
-    for entry in ledger.entries():
-        if entry.raw.get("token_hash") == token_hash:
-            if entry.raw.get("payload") == payload and entry.raw.get("signature") == signature:
-                return True
-    return False
-
-
-def verify_capability_token(
-    token: Dict[str, Any],
-    now: Optional[datetime] = None,
-    require_ledger: bool = True,
-) -> Dict[str, str]:
-    missing = REQUIRED_FIELDS - token.keys()
-    if missing:
-        raise ValueError(f"Token missing fields: {sorted(missing)}")
-    if token.get("token_type") != TOKEN_TYPE:
-        raise ValueError("Token type mismatch")
-    if token.get("schema_version") != TOKEN_SCHEMA_VERSION:
-        raise ValueError("Unsupported token schema version")
-    payload = _payload_from_token(token)
-    signature = token["signature"]
-    issuer = payload.get("issuer", {})
-    public_key = issuer.get("public_key")
-    if not public_key:
-        raise ValueError("Token missing issuer public key")
-    if not verify_signature(public_key, payload, signature):
-        raise ValueError("Token signature verification failed")
-    if is_key_revoked(issuer.get("key_id")):
-        raise ValueError(f"Key {issuer.get('key_id')} has been revoked")
-    now_dt = now or datetime.now(timezone.utc).replace(microsecond=0)
-    expires_at = _parse_iso(payload["expires_at"])
-    if expires_at < now_dt:
-        raise ValueError("Token has expired")
-    token_hash = token_ref(token)
-    if is_token_revoked(token_hash):
-        raise ValueError("Token has been revoked")
-    if require_ledger and not check_token_ledger_membership(token_hash, payload, signature):
-        raise ValueError("Token not present in append-only ledger")
-    return {
-        "status": "verified",
-        "token_hash": token_hash,
-        "capability": payload.get("capability"),
-        "audience_repo": payload.get("audience_repo"),
-        "expires_at": payload.get("expires_at"),
-    }
-
-
-def show_token(path: Path) -> Dict[str, Any]:
-    token = load_token(path)
-    return {
-        "token": token,
-        "token_hash": token_ref(token),
-    }
-
 FILE: docs/CONTRACT.md
 Kind: text
-Size: 4764
-Last modified: 2026-01-20T06:55:50Z
+Size: 4299
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
-# BLUX Reg Contract
+# BLUX-Reg Contract
 
-This document specifies the public contract for the unified BLUX registry demo. Paths, schemas, and the append-only audit rules are stable and versioned at `schema_version: 1.0`.
+This document specifies the public contract for the BLUX-Reg trust kernel. Token schema, trust-store format, and append-only audit rules are stable at `schema_version: 1.0`.
 
 ## Default paths
 - Config root: `~/.config/blux-reg/` (override with `BLUX_REG_CONFIG_DIR`)
 - Keys: `~/.config/blux-reg/keys/`
 - Manifests: `~/.config/blux-reg/manifests/`
 - Ledger: `~/.config/blux-reg/trust/ledger.jsonl`
+- Trust store: `~/.config/blux-reg/trust/trust_store.jsonl`
+- Token revocations: `~/.config/blux-reg/trust/token_revocations.jsonl`
 - Cache/temp: `~/.config/blux-reg/cache/` (safe to clear, never used for trust state)
 
 ## Key material
@@ -2133,18 +640,14 @@ This document specifies the public contract for the unified BLUX registry demo. 
   "expires_at": "2025-01-02T00:00:00+00:00",
   "ttl_seconds": 86400,
   "capability": "publish",
-  "audience_repo": "Outer-Void/blux-guard",
+  "audience": "outer-void/blux-example",
   "constraints": {
     "scope": "release"
   },
   "issuer": {
-    "key_id": "project-alpha",
-    "key_type": "project",
-    "public_key": "<base64 ed25519 public key>",
-    "compatibility": {
-      "BLUX-Quantum": ">=1.0",
-      "BLUX-Guard": ">=1.0"
-    }
+    "key_name": "issuer",
+    "fingerprint": "<sha256 raw public key>",
+    "public_key": "<pem ed25519 public key>"
   },
   "signature": "<base64 ed25519 signature over canonical token payload>"
 }
@@ -2154,31 +657,33 @@ This document specifies the public contract for the unified BLUX registry demo. 
 - Token hash (`capability_token_ref`): SHA-256 of canonical JSON including the signature.
 - Tokens are offline-verifiable, scoped, and time-bound. Secrets must not be embedded in tokens.
 
-### Token ledger entry (append-only)
+## Trust store schema (JSONL, append-only)
+Each line is canonical JSON with sorted keys. Entries are chained with `prev_hash` and `entry_hash`.
+
+### Trust anchor entry
 ```json
 {
-  "timestamp": "2025-01-01T00:00:00+00:00",
-  "issuer": "project-alpha",
-  "role": "project",
-  "token_hash": "<sha256 canonical token JSON>",
-  "payload": "<token payload without signature>",
-  "signature": "<base64 signature over payload>"
+  "schema_version": "1.0",
+  "entry_type": "trust_anchor",
+  "added_at": "2025-01-01T00:00:00+00:00",
+  "fingerprint": "<sha256 raw public key>",
+  "public_key": "<pem ed25519 public key>",
+  "source": "local",
+  "prev_hash": null,
+  "entry_hash": "<sha256 hash of entry without entry_hash>"
 }
 ```
 
-### Token revocation entry (append-only)
+### Token revocation entry
 ```json
 {
-  "timestamp": "2025-01-01T00:00:00+00:00",
-  "issuer": "security-team",
-  "role": "revocation",
-  "payload": {
-    "event": "token_revoked",
-    "timestamp": "2025-01-01T00:00:00+00:00",
-    "token_hash": "<sha256 canonical token JSON>",
-    "reason": "compromised",
-    "revoker": "security-team"
-  }
+  "schema_version": "1.0",
+  "entry_type": "token_revocation",
+  "revoked_at": "2025-01-01T00:00:00+00:00",
+  "token_hash": "<sha256 canonical token JSON>",
+  "reason": "compromised",
+  "prev_hash": "<previous entry hash>",
+  "entry_hash": "<sha256 hash of entry without entry_hash>"
 }
 ```
 
@@ -2201,64 +706,45 @@ Required fields:
 ### Allowed actions
 `keygen`, `key-import`, `sign`, `event`, `token-issue`, `token-revoke`, plus future actions that follow the schema above.
 
-## Envelope reference
-Artifacts that require delegated capabilities should reference tokens by hash:
-
-```json
-{
-  "capability_token_ref": "<sha256 hash of canonical token JSON>"
-}
-```
-
 ## CLI contract
 - `blux-reg init` — create config dirs
-- `blux-reg status [--json]`
-- `blux-reg keygen [--name NAME] [--force]`
-- `blux-reg key list`
-- `blux-reg key export --name NAME [--public/--private] [--output FILE]`
-- `blux-reg key import PATH [--name NAME]`
-- `blux-reg sign <artifact> [--key-name NAME] [--output FILE]`
-- `blux-reg verify <manifest>`
-- `blux-reg audit add-event "message" [--actor FINGERPRINT]`
-- `blux-reg audit tail [-n N] [--json]`
-- `blux-reg audit verify-chain`
-- `blux-reg token issue <key_id> <key_type> <capability> <audience_repo> <ttl_seconds> [--constraints JSON]`
-- `blux-reg token verify <token_path>`
-- `blux-reg token revoke <token_hash> [--reason REASON] --revoker ID`
-- `blux-reg token show <token_path>`
+- `blux-reg issue <key_name> <capability> <audience> <ttl_seconds> [--constraints JSON]`
+- `blux-reg hash <token_path>`
+- `blux-reg verify <token_path>`
+- `blux-reg revoke <token_hash> [--reason REASON] [--revoker ID]`
 
 Exit codes are stable: `0` success, `1` on verification/chain failures.
 
 FILE: docs/roles.md
 Kind: text
-Size: 1304
-Last modified: 2026-01-20T13:55:06Z
+Size: 940
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 # BLUX-Reg Role Definition
 
 ## What BLUX-Reg Does
-- Issues and verifies cryptographic signatures for artifacts, manifests, and capability tokens.
-- Maintains append-only ledgers for provenance, verification, and revocation records.
-- Performs local-first validation so artifacts can be verified offline without centralized services.
-- Tracks capability token references by deterministic hashes for delegation without sharing secrets.
+- Issues and verifies cryptographic capability tokens.
+- Maintains append-only provenance and revocation records.
+- Performs local-first verification so tokens can be validated offline.
+- Produces token artifacts and verification reports only.
 
 ## What BLUX-Reg Does **Not** Do
-- It does **not** make value judgments or governance decisions.
-- It does **not** perform human-like judgment or scoring.
-- It does **not** execute or deploy artifacts; it only signs and verifies.
-- It does **not** host, distribute, or mutate BLUX-ecosystem contracts.
+- It does **not** execute workloads or dispatch actions.
+- It does **not** enforce policy or issue authorization receipts.
+- It does **not** route requests or make judgments.
+- It does **not** copy canonical BLUX contracts.
 
 ## Contract Referencing
-BLUX-Reg references BLUX-ecosystem contracts by `$id` only. Contract definitions are **never** copied into this repository. When validation is needed, BLUX-Reg uses the `$id` to locate the authoritative contract in the upstream BLUX-ecosystem.
+BLUX-Reg references BLUX-ecosystem contracts by `blux://` identifier only. Contract definitions are **never** copied into this repository.
 
 ## Boundary Enforcement
-A boundary CI test scans tracked files for prohibited keywords and paths that would imply governance or scoring logic. The check is regex-based, documented in the test itself, and intentionally narrow to avoid false positives while still blocking prohibited functionality.
+Boundary checks scan code directories for prohibited execution, routing, or governance keywords and for copied contract identifiers. The checks are intentionally narrow and focus on code paths only.
 
 FILE: plan.md
 Kind: text
 Size: 964
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 ---
@@ -2291,7 +777,7 @@ CONTENT:
 FILE: pyproject.toml
 Kind: text
 Size: 577
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 [project]
@@ -2327,7 +813,7 @@ addopts = "-q"
 FILE: requirements-dev.txt
 Kind: text
 Size: 27
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 -r requirements.txt
@@ -2336,7 +822,7 @@ pytest
 FILE: requirements.txt
 Kind: text
 Size: 55
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 cryptography>=42.0.0
@@ -2346,7 +832,7 @@ pynacl>=1.5.0
 FILE: schemas/capability_manifest.schema.json
 Kind: text
 Size: 502
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 {
@@ -2379,7 +865,7 @@ CONTENT:
 FILE: schemas/capability_token.schema.json
 Kind: text
 Size: 1295
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 {
@@ -2456,7 +942,7 @@ CONTENT:
 FILE: schemas/revocation.schema.json
 Kind: text
 Size: 599
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 {
@@ -2494,8 +980,8 @@ CONTENT:
 
 FILE: scripts/demo_unified_reg.sh
 Kind: text
-Size: 774
-Last modified: 2026-01-20T06:55:50Z
+Size: 593
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 #!/usr/bin/env bash
@@ -2505,85 +991,218 @@ IFS=$'\n\t'
 CONFIG_DIR=${BLUX_REG_CONFIG_DIR:-"$HOME/.config/blux-reg"}
 export BLUX_REG_CONFIG_DIR="$CONFIG_DIR"
 
-bin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-
 command -v blux-reg >/dev/null 2>&1 || {
   echo "blux-reg entrypoint not installed; try 'pip install -e .' first" >&2
   exit 1
 }
 
-echo "[1/6] init"
 blux-reg init
 
-echo "[2/6] keygen"
-blux-reg keygen --name demo --force
+python - <<'PY'
+from blux_reg import config, crypto
 
-sample="$CONFIG_DIR/sample.txt"
-echo "demo artifact" > "$sample"
+config.refresh_paths()
+crypto.generate_keypair("demo", force=True)
+PY
 
-echo "[3/6] sign"
-man_out="$sample.blux-manifest.json"
-blux-reg sign "$sample" --key-name demo --output "$man_out"
+token_out="$CONFIG_DIR/token.json"
 
-echo "[4/6] verify"
-blux-reg verify "$man_out"
-
-echo "[5/6] audit tail"
-blux-reg audit tail -n 5
-
-echo "[6/6] audit verify-chain"
-blux-reg audit verify-chain
-
+blux-reg issue demo publish outer-void/blux-example 3600 --output "$token_out"
+blux-reg hash "$token_out"
+blux-reg verify "$token_out"
 
 FILE: scripts/physics_check.sh
 Kind: text
-Size: 799
-Last modified: 2026-01-20T13:55:06Z
+Size: 1038
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 #!/usr/bin/env bash
 set -euo pipefail
 
-forbidden_pattern='safety policy|\b(ethic|morality|discern|posture|illusion|therapy|harm)\b'
-if rg -n -i --hidden --glob '!.git/*' "$forbidden_pattern" .; then
-  echo "Physics check failed: forbidden policy/discernment tokens detected."
+code_globs=(
+  --glob "src/**"
+  --glob "tests/**"
+  --glob "scripts/**"
+  --glob "bin/**"
+  --glob "!scripts/physics_check.sh"
+  --glob "!tests/test_boundary_ci.py"
+  --glob "!**/__pycache__/**"
+)
+
+execution_pattern='\bsubprocess\b|os\.system|\bexec\(|\bshell\b|\bchild_process\b'
+role_pattern='guard_receipt|discernment_report|\bexecute\b|\brouter\b|\borchestr|\bpolicy\b|\bethic|\bquantum\b|\bdoctrine\b|\blite\b'
+
+if rg -n -i --hidden "${code_globs[@]}" "$execution_pattern" .; then
+  echo "Physics check failed: execution primitives detected in code."
   exit 1
 fi
 
-phase0_paths=(
-  "contracts/envelope.schema.json"
-  "contracts/request.schema.json"
-  "contracts/discernment_report.schema.json"
-  "contracts/guard_receipt.schema.json"
-  "schemas/envelope.schema.json"
-  "schemas/request.schema.json"
-  "schemas/discernment_report.schema.json"
-  "schemas/guard_receipt.schema.json"
-)
+if rg -n -i --hidden "${code_globs[@]}" "$role_pattern" .; then
+  echo "Physics check failed: prohibited role keywords detected in code."
+  exit 1
+fi
 
-for path in "${phase0_paths[@]}"; do
-  if [[ -e "$path" ]]; then
-    echo "Physics check failed: Phase 0 contract schema detected at $path."
-    exit 1
-  fi
-done
+if [[ -d "contracts" ]]; then
+  echo "Physics check failed: contracts directory detected."
+  exit 1
+fi
+
+if rg -n --hidden "\\$id\s*:\s*\"blux://contracts/" .; then
+  echo "Physics check failed: canonical contract identifiers detected."
+  exit 1
+fi
 
 echo "Physics check passed."
 
 FILE: src/blux_reg/__init__.py
 Kind: text
-Size: 88
-Last modified: 2026-01-20T13:55:06Z
+Size: 312
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 """blux-reg package."""
 
-__all__ = ["config", "crypto", "ledger", "manifest", "tokens"]
+from .api import issue_token, load_trust_store, revoke_token, save_trust_store, verify_token
+
+__all__ = [
+    "config",
+    "crypto",
+    "issue_token",
+    "ledger",
+    "load_trust_store",
+    "manifest",
+    "revoke_token",
+    "save_trust_store",
+    "tokens",
+    "verify_token",
+]
+
+FILE: src/blux_reg/api.py
+Kind: text
+Size: 3564
+Last modified: 2026-01-21T07:55:25Z
+
+CONTENT:
+"""Public API surface for BLUX-Reg trust kernel."""
+from __future__ import annotations
+
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, Optional
+
+from . import tokens
+from .trust_store import (
+    TrustStore,
+    load_trust_store as _load_trust_store,
+    new_token_revocation,
+    save_trust_store as _save_trust_store,
+    trust_store_index,
+)
+
+
+def issue_token(
+    claims: Dict[str, Any],
+    issuer_key: str,
+    ttl: int,
+    constraints: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Issue a capability token from structured claims.
+
+    Required claim fields: ``capability`` and ``audience``.
+    """
+    if not isinstance(claims, dict):
+        raise ValueError("claims must be a dict")
+    capability = claims.get("capability")
+    audience = claims.get("audience")
+    if not capability or not audience:
+        raise ValueError("claims must include capability and audience")
+    token, token_hash, path = tokens.issue_capability_token(
+        key_name=issuer_key,
+        capability=capability,
+        audience=audience,
+        ttl_seconds=ttl,
+        constraints=constraints or claims.get("constraints") or {},
+    )
+    return {"token": token, "token_hash": token_hash, "path": str(path)}
+
+
+def verify_token(
+    token: Dict[str, Any],
+    trust_store: TrustStore | Path | str,
+    now: Optional[datetime] = None,
+) -> Dict[str, Any]:
+    """Verify a capability token against a trust store."""
+    store = _resolve_store(trust_store)
+    index = trust_store_index(store)
+    try:
+        result = tokens.verify_capability_token(
+            token,
+            now=now,
+            trust_anchors=index["trusted_issuers"] or None,
+            revoked_tokens=index["revoked_tokens"] or None,
+        )
+        return {
+            "valid": True,
+            "reason_codes": [],
+            "token_hash": result.get("token_hash"),
+            "capability": result.get("capability"),
+            "audience": result.get("audience"),
+            "expires_at": result.get("expires_at"),
+        }
+    except ValueError as exc:
+        return {
+            "valid": False,
+            "reason_codes": [_reason_code(str(exc))],
+        }
+
+
+def revoke_token(token_id: str, reason: str, store: TrustStore | Path | str) -> Dict[str, Any]:
+    """Revoke a token by hash in the trust store."""
+    trust_store = _resolve_store(store)
+    entry = trust_store.add_entry(new_token_revocation(token_id, reason))
+    save_trust_store(trust_store.path, trust_store)
+    return entry
+
+
+def load_trust_store(path: Path | str) -> TrustStore:
+    return _load_trust_store(Path(path))
+
+
+def save_trust_store(path: Path | str, store: TrustStore) -> None:
+    _save_trust_store(Path(path), store)
+
+
+def _resolve_store(store: TrustStore | Path | str) -> TrustStore:
+    if isinstance(store, TrustStore):
+        return store
+    return _load_trust_store(Path(store))
+
+
+def _reason_code(message: str) -> str:
+    lowered = message.lower()
+    if "missing fields" in lowered:
+        return "missing_fields"
+    if "token type" in lowered:
+        return "token_type_mismatch"
+    if "unsupported token schema" in lowered:
+        return "unsupported_schema"
+    if "missing issuer public key" in lowered:
+        return "missing_issuer_key"
+    if "signature verification" in lowered:
+        return "invalid_signature"
+    if "expired" in lowered:
+        return "expired"
+    if "revoked" in lowered:
+        return "revoked"
+    if "issuer not trusted" in lowered:
+        return "untrusted_issuer"
+    return "invalid"
 
 FILE: src/blux_reg/cli.py
 Kind: text
-Size: 7294
-Last modified: 2026-01-20T13:55:06Z
+Size: 2708
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 from __future__ import annotations
@@ -2594,13 +1213,12 @@ from typing import Optional
 
 import click
 
-from . import config, crypto, ledger, manifest, tokens
-from .util import canonical_json
+from . import config, tokens
 
 
 @click.group()
 def app():
-    """blux-reg: local-first signing + audit CLI."""
+    """blux-reg: local-first trust kernel for capability tokens."""
     config.refresh_paths()
 
 
@@ -2609,115 +1227,7 @@ def init():
     """Initialize config directories."""
     config.ensure_directories()
     click.echo(f"config_dir: {config.CONFIG_ROOT}")
-    click.echo(f"keys_dir:   {config.KEYS_DIR}")
-    click.echo(f"ledger:     {config.LEDGER_PATH}")
-
-
-@app.command()
-@click.option("--json-output", is_flag=True, help="Return status as JSON")
-def status(json_output: bool = False):
-    """Show registry status."""
-    config.ensure_directories()
-    keys = crypto.list_keys()
-    info = {
-        "config_root": str(config.CONFIG_ROOT),
-        "keys": [k.as_dict() for k in keys],
-        "ledger_entries": ledger.ledger_size(),
-        "ledger_last_hash": ledger.last_hash(),
-    }
-    if json_output:
-        click.echo(json.dumps(info, indent=2))
-    else:
-        click.echo(f"config: {info['config_root']}")
-        click.echo(f"keys: {len(keys)} available")
-        click.echo(f"ledger entries: {info['ledger_entries']}")
-        click.echo(f"last hash: {info['ledger_last_hash']}")
-
-
-@app.group()
-def key():
-    """Key management commands."""
-
-
-def _run_keygen(name: str, force: bool):
-    config.ensure_directories()
-    info = crypto.generate_keypair(name=name, force=force)
-    ledger.append_entry(
-        action="keygen",
-        actor=info.fingerprint,
-        payload_summary=f"key:{name}",
-    )
-    click.echo(f"generated {name} ({info.fingerprint})")
-
-
-@key.command()
-@click.option("--name", default="default", help="Key name")
-@click.option("--force", is_flag=True, help="Overwrite existing key")
-def keygen(name: str, force: bool):
-    _run_keygen(name, force)
-
-
-@app.command(name="keygen")
-@click.option("--name", default="default", help="Key name")
-@click.option("--force", is_flag=True, help="Overwrite existing key")
-def keygen_root(name: str, force: bool):
-    _run_keygen(name, force)
-
-
-@key.command(name="list")
-def key_list():
-    keys = crypto.list_keys()
-    if not keys:
-        click.echo("no keys found")
-        return
-    for info in keys:
-        click.echo(f"{info.name}\t{info.fingerprint}\t{info.public_path}")
-
-
-@key.command()
-@click.option("--name", default="default", help="Key name")
-@click.option("--public/--private", default=True, help="Export public or private key")
-@click.option("--output", type=click.Path(), help="Output path (defaults to stdout)")
-def export(name: str, public: bool, output: Optional[str]):
-    data = crypto.export_key(name, public=public)
-    if output:
-        Path(output).write_bytes(data)
-    else:
-        click.echo(data.decode())
-
-
-@key.command()
-@click.argument("path", type=click.Path(exists=True))
-@click.option("--name", default="imported", help="Name to store key under")
-def import_key(path: str, name: str):
-    info = crypto.import_private_key(Path(path), name)
-    ledger.append_entry(
-        action="key-import",
-        actor=info.fingerprint,
-        payload_summary=f"key:{name}",
-    )
-    click.echo(f"imported {name} ({info.fingerprint})")
-
-
-@app.command()
-@click.argument("artifact", type=click.Path(exists=True))
-@click.option("--key-name", default="default", help="Key to use")
-@click.option("--output", type=click.Path(), help="Manifest output path")
-def sign(artifact: str, key_name: str, output: Optional[str]):
-    manifest_path, data = manifest.sign_artifact(Path(artifact), key_name, Path(output) if output else None)
-    click.echo(f"manifest: {manifest_path}")
-    click.echo(f"fingerprint: {data['key_fingerprint']}")
-
-
-@app.command(name="verify-manifest")
-@click.argument("manifest_path", type=click.Path(exists=True))
-def verify_manifest(manifest_path: str):
-    ok = manifest.verify_manifest(Path(manifest_path))
-    if ok:
-        click.echo("verified")
-        raise SystemExit(0)
-    click.echo("verification failed", err=True)
-    raise SystemExit(1)
+    click.echo(f"trust_dir:  {config.TRUST_DIR}")
 
 
 def _parse_constraints(raw: str) -> dict:
@@ -2772,46 +1282,11 @@ def verify(token_path: str):
 @app.command()
 @click.argument("token_hash")
 @click.option("--reason", default="unspecified")
-@click.option("--revoker", required=True, help="Identifier for the revocation")
+@click.option("--revoker", default="anonymous", help="Identifier for the revocation")
 def revoke(token_hash: str, reason: str, revoker: str):
     """Revoke a capability token offline."""
     entry = tokens.revoke_capability_token(token_hash, reason, revoker)
     click.echo(json.dumps(entry, indent=2, sort_keys=True))
-
-
-@app.group()
-def audit():
-    """Audit ledger commands."""
-
-
-@audit.command("add-event")
-@click.argument("message")
-@click.option("--actor", help="Fingerprint or actor id", default="anonymous")
-def add_event(message: str, actor: str):
-    ledger.append_entry(action="event", actor=actor, payload_summary=message)
-    click.echo("event logged")
-
-
-@audit.command("tail")
-@click.option("-n", "--lines", default=10, help="Number of entries to show")
-@click.option("--json-output", is_flag=True, help="Output JSON")
-def audit_tail(lines: int, json_output: bool):
-    entries = ledger.tail_entries(lines)
-    if json_output:
-        click.echo(json.dumps(entries, indent=2))
-        return
-    for entry in entries:
-        click.echo(canonical_json(entry))
-
-
-@audit.command("verify-chain")
-def audit_verify_chain():
-    ok = ledger.verify_chain()
-    if ok:
-        click.echo("ledger ok")
-        raise SystemExit(0)
-    click.echo("ledger tampered", err=True)
-    raise SystemExit(1)
 
 
 if __name__ == "__main__":
@@ -2819,8 +1294,8 @@ if __name__ == "__main__":
 
 FILE: src/blux_reg/config.py
 Kind: text
-Size: 1745
-Last modified: 2026-01-20T13:55:06Z
+Size: 1879
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 """Configuration and path helpers for blux-reg.
@@ -2853,6 +1328,7 @@ LEDGER_PATH = TRUST_DIR / "ledger.jsonl"
 CACHE_DIR = CONFIG_ROOT / "cache"
 TOKENS_DIR = TRUST_DIR / "tokens"
 REVOCATIONS_PATH = TRUST_DIR / "token_revocations.jsonl"
+TRUST_STORE_PATH = TRUST_DIR / "trust_store.jsonl"
 
 
 def refresh_paths() -> None:
@@ -2861,6 +1337,7 @@ def refresh_paths() -> None:
     Useful for tests that temporarily override ``BLUX_REG_CONFIG_DIR``.
     """
     global CONFIG_ROOT, KEYS_DIR, MANIFEST_DIR, TRUST_DIR, LEDGER_PATH, CACHE_DIR, TOKENS_DIR, REVOCATIONS_PATH
+    global TRUST_STORE_PATH
     CONFIG_ROOT = _resolve_root()
     KEYS_DIR = CONFIG_ROOT / "keys"
     MANIFEST_DIR = CONFIG_ROOT / "manifests"
@@ -2869,6 +1346,7 @@ def refresh_paths() -> None:
     CACHE_DIR = CONFIG_ROOT / "cache"
     TOKENS_DIR = TRUST_DIR / "tokens"
     REVOCATIONS_PATH = TRUST_DIR / "token_revocations.jsonl"
+    TRUST_STORE_PATH = TRUST_DIR / "trust_store.jsonl"
 
 
 def ensure_directories() -> None:
@@ -2879,7 +1357,7 @@ def ensure_directories() -> None:
 FILE: src/blux_reg/crypto.py
 Kind: text
 Size: 4920
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 """Key management helpers using Ed25519."""
@@ -3033,7 +1511,7 @@ def verify_signature(public_key: ed25519.Ed25519PublicKey, message: bytes, signa
 FILE: src/blux_reg/ledger.py
 Kind: text
 Size: 2316
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 """Append-only audit ledger utilities."""
@@ -3128,7 +1606,7 @@ def last_hash() -> str | None:
 FILE: src/blux_reg/manifest.py
 Kind: text
 Size: 3083
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 """Manifest creation and verification."""
@@ -3215,8 +1693,8 @@ def verify_manifest(manifest_path: Path) -> bool:
 
 FILE: src/blux_reg/tokens.py
 Kind: text
-Size: 5748
-Last modified: 2026-01-20T13:55:06Z
+Size: 6209
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 """Capability token issuance and verification."""
@@ -3365,7 +1843,12 @@ def revoke_capability_token(token_hash: str, reason: str, revoker: str) -> Dict[
     return entry
 
 
-def verify_capability_token(token: Dict[str, Any], now: Optional[datetime] = None) -> Dict[str, str]:
+def verify_capability_token(
+    token: Dict[str, Any],
+    now: Optional[datetime] = None,
+    trust_anchors: Optional[set[str]] = None,
+    revoked_tokens: Optional[set[str]] = None,
+) -> Dict[str, str]:
     missing = REQUIRED_FIELDS - token.keys()
     if missing:
         raise ValueError(f"Token missing fields: {sorted(missing)}")
@@ -3382,12 +1865,19 @@ def verify_capability_token(token: Dict[str, Any], now: Optional[datetime] = Non
     message = canonical_json(payload).encode()
     if not crypto.verify_signature(public_key, message, token["signature"]):
         raise ValueError("Token signature verification failed")
+    if trust_anchors is not None:
+        issuer_fingerprint = issuer.get("fingerprint")
+        if not issuer_fingerprint or issuer_fingerprint not in trust_anchors:
+            raise ValueError("Token issuer not trusted")
     now_dt = now or datetime.now(timezone.utc).replace(microsecond=0)
     expires_at = _parse_iso(payload["expires_at"])
     if expires_at < now_dt:
         raise ValueError("Token has expired")
     token_hash = token_ref(token)
-    if is_token_revoked(token_hash):
+    if revoked_tokens is not None:
+        if token_hash in revoked_tokens:
+            raise ValueError("Token has been revoked")
+    elif is_token_revoked(token_hash):
         raise ValueError("Token has been revoked")
     return {
         "status": "verified",
@@ -3397,10 +1887,141 @@ def verify_capability_token(token: Dict[str, Any], now: Optional[datetime] = Non
         "expires_at": payload.get("expires_at"),
     }
 
+FILE: src/blux_reg/trust_store.py
+Kind: text
+Size: 4288
+Last modified: 2026-01-21T07:55:25Z
+
+CONTENT:
+"""Append-only trust store for issuers and revocations."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional, Set
+
+from .util import canonical_json, sha256_hex
+
+TRUST_STORE_SCHEMA_VERSION = "1.0"
+TRUST_ANCHOR_TYPE = "trust_anchor"
+TOKEN_REVOCATION_TYPE = "token_revocation"
+
+
+@dataclass
+class TrustStore:
+    """In-memory trust store with append-only persistence."""
+
+    path: Path
+    entries: List[Dict[str, Any]] = field(default_factory=list)
+    pending_entries: List[Dict[str, Any]] = field(default_factory=list)
+    last_hash: Optional[str] = None
+
+    def add_entry(self, entry: Dict[str, Any]) -> Dict[str, Any]:
+        data = dict(entry)
+        data.setdefault("schema_version", TRUST_STORE_SCHEMA_VERSION)
+        data["prev_hash"] = self.last_hash
+        entry_hash = sha256_hex(canonical_json(data).encode())
+        data["entry_hash"] = entry_hash
+        self.entries.append(data)
+        self.pending_entries.append(data)
+        self.last_hash = entry_hash
+        return data
+
+
+def _iter_entries(path: Path) -> Iterable[Dict[str, Any]]:
+    if not path.exists():
+        return []
+    with path.open("r", encoding="utf-8") as fh:
+        for line in fh:
+            if line.strip():
+                yield json_loads(line)
+
+
+def _compute_entry_hash(entry: Dict[str, Any]) -> str:
+    data = dict(entry)
+    data.pop("entry_hash", None)
+    return sha256_hex(canonical_json(data).encode())
+
+
+def _verify_chain(entries: Iterable[Dict[str, Any]]) -> Optional[str]:
+    prev_hash = None
+    last_hash = None
+    for entry in entries:
+        if entry.get("prev_hash") != prev_hash:
+            raise ValueError("Trust store hash chain mismatch")
+        if _compute_entry_hash(entry) != entry.get("entry_hash"):
+            raise ValueError("Trust store entry hash mismatch")
+        last_hash = entry.get("entry_hash")
+        prev_hash = last_hash
+    return last_hash
+
+
+def load_trust_store(path: Path) -> TrustStore:
+    """Load an append-only trust store from disk."""
+    entries = list(_iter_entries(path))
+    last_hash = _verify_chain(entries)
+    return TrustStore(path=path, entries=entries, last_hash=last_hash)
+
+
+def save_trust_store(path: Path, store: TrustStore) -> None:
+    """Append pending trust store entries to disk."""
+    if not store.pending_entries:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as fh:
+        for entry in store.pending_entries:
+            fh.write(canonical_json(entry) + "\n")
+    store.pending_entries.clear()
+
+
+def trust_store_index(store: TrustStore) -> Dict[str, Set[str]]:
+    """Build index sets for trusted issuers and revoked tokens."""
+    trusted_issuers: Set[str] = set()
+    revoked_tokens: Set[str] = set()
+    for entry in store.entries:
+        if entry.get("entry_type") == TRUST_ANCHOR_TYPE:
+            fingerprint = entry.get("fingerprint")
+            if fingerprint:
+                trusted_issuers.add(fingerprint)
+        if entry.get("entry_type") == TOKEN_REVOCATION_TYPE:
+            token_hash = entry.get("token_hash")
+            if token_hash:
+                revoked_tokens.add(token_hash)
+    return {"trusted_issuers": trusted_issuers, "revoked_tokens": revoked_tokens}
+
+
+def new_trust_anchor(fingerprint: str, public_key_pem: str, source: str = "local") -> Dict[str, Any]:
+    """Create a trust anchor entry for an issuer fingerprint."""
+    return {
+        "entry_type": TRUST_ANCHOR_TYPE,
+        "added_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "fingerprint": fingerprint,
+        "public_key": public_key_pem,
+        "source": source,
+    }
+
+
+def new_token_revocation(token_hash: str, reason: str) -> Dict[str, Any]:
+    """Create a token revocation entry."""
+    return {
+        "entry_type": TOKEN_REVOCATION_TYPE,
+        "revoked_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "token_hash": token_hash,
+        "reason": reason,
+    }
+
+
+def json_loads(payload: str) -> Dict[str, Any]:
+    """Parse JSON payloads without importing json at module import time."""
+    import json
+
+    return json.loads(payload)
+
 FILE: src/blux_reg/util.py
 Kind: text
 Size: 784
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 """Utility helpers for deterministic serialization and hashing."""
@@ -3435,7 +2056,7 @@ def write_json(path: Path, data: Dict[str, Any]) -> None:
 FILE: tests/conftest.py
 Kind: text
 Size: 174
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 import os
@@ -3449,35 +2070,49 @@ if str(SRC) not in sys.path:
 
 FILE: tests/test_boundary_ci.py
 Kind: text
-Size: 2062
-Last modified: 2026-01-20T13:55:06Z
+Size: 3513
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 import re
-import subprocess
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+CODE_DIRS = [REPO_ROOT / "src", REPO_ROOT / "tests", REPO_ROOT / "scripts", REPO_ROOT / "bin"]
 
-# Boundary: prohibited keywords/paths that imply policy/ethics/discernment logic.
-# This list is intentionally small and explicit to avoid false positives.
 PROHIBITED_CONTENT_PATTERNS = [
-    re.compile(r"\bpolicy[-_ ]engine\b", re.IGNORECASE),
-    re.compile(r"\bpolicy[-_ ]as[-_ ]code\b", re.IGNORECASE),
-    re.compile(r"\bposture[-_ ]scoring\b", re.IGNORECASE),
-    re.compile(r"\bdiscernment\b", re.IGNORECASE),
-    re.compile(r"\bethic(s|al)?\b", re.IGNORECASE),
-    re.compile(r"\bmoral(ity)?\b", re.IGNORECASE),
+    re.compile(r"\bsubprocess\b", re.IGNORECASE),
+    re.compile(r"os\.system", re.IGNORECASE),
+    re.compile(r"\bexec\(", re.IGNORECASE),
+    re.compile(r"\bshell\b", re.IGNORECASE),
+    re.compile(r"\bchild_process\b", re.IGNORECASE),
+    re.compile(r"guard_receipt", re.IGNORECASE),
+    re.compile(r"discernment_report", re.IGNORECASE),
+    re.compile(r"\bexecute\b", re.IGNORECASE),
+    re.compile(r"\brouter\b", re.IGNORECASE),
+    re.compile(r"\borchestr", re.IGNORECASE),
+    re.compile(r"\bpolicy\b", re.IGNORECASE),
+    re.compile(r"\bethic", re.IGNORECASE),
+    re.compile(r"\bquantum\b", re.IGNORECASE),
+    re.compile(r"\bdoctrine\b", re.IGNORECASE),
+    re.compile(r"\blite\b", re.IGNORECASE),
 ]
 
 PROHIBITED_PATH_PATTERNS = [
-    re.compile(r"policy[-_ ]engine", re.IGNORECASE),
-    re.compile(r"policy[-_ ]as[-_ ]code", re.IGNORECASE),
-    re.compile(r"posture[-_ ]scoring", re.IGNORECASE),
-    re.compile(r"discernment", re.IGNORECASE),
-    re.compile(r"ethic", re.IGNORECASE),
-    re.compile(r"moral", re.IGNORECASE),
+    re.compile(r"contracts", re.IGNORECASE),
+    re.compile(r"guard_receipt", re.IGNORECASE),
+    re.compile(r"discernment_report", re.IGNORECASE),
+    re.compile(r"\bexecute\b", re.IGNORECASE),
+    re.compile(r"\brouter\b", re.IGNORECASE),
+    re.compile(r"\borchestr", re.IGNORECASE),
+    re.compile(r"\bpolicy\b", re.IGNORECASE),
+    re.compile(r"\bethic", re.IGNORECASE),
+    re.compile(r"\bquantum\b", re.IGNORECASE),
+    re.compile(r"\bdoctrine\b", re.IGNORECASE),
+    re.compile(r"\blite\b", re.IGNORECASE),
 ]
+
+PROHIBITED_SCHEMA_ID = re.compile(r"\$id\s*:\s*\"blux://contracts/", re.IGNORECASE)
 
 ALLOWLIST = {
     "tests/test_boundary_ci.py",
@@ -3485,39 +2120,62 @@ ALLOWLIST = {
 }
 
 
-def _tracked_files():
-    output = subprocess.check_output(["git", "ls-files", "-z"], cwd=REPO_ROOT)
-    for entry in output.decode("utf-8").split("\x00"):
-        if entry:
-            yield entry
+def _iter_code_files():
+    for root in CODE_DIRS:
+        if not root.exists():
+            continue
+        for path in root.rglob("*"):
+            if not path.is_file():
+                continue
+            if "__pycache__" in path.parts:
+                continue
+            rel_path = path.relative_to(REPO_ROOT).as_posix()
+            if rel_path in ALLOWLIST:
+                continue
+            yield path, rel_path
 
 
-def test_boundary_no_policy_discernment_logic():
+def test_boundary_no_forbidden_logic_or_contracts():
     violations = []
 
-    for rel_path in _tracked_files():
-        if rel_path in ALLOWLIST:
-            continue
+    if (REPO_ROOT / "contracts").exists():
+        violations.append("path:contracts:contracts-directory")
+
+    for path, rel_path in _iter_code_files():
         for pattern in PROHIBITED_PATH_PATTERNS:
             if pattern.search(rel_path):
                 violations.append(f"path:{rel_path}:{pattern.pattern}")
                 break
         else:
-            path = REPO_ROOT / rel_path
-            if not path.is_file():
-                continue
             content = path.read_text(encoding="utf-8", errors="ignore")
+            if PROHIBITED_SCHEMA_ID.search(content):
+                violations.append(f"schema:{rel_path}:blux-contract-id")
+                continue
             for pattern in PROHIBITED_CONTENT_PATTERNS:
                 if pattern.search(content):
                     violations.append(f"content:{rel_path}:{pattern.pattern}")
                     break
+
+    for path in REPO_ROOT.rglob("*"):
+        if ".git" in path.parts:
+            continue
+        if "__pycache__" in path.parts:
+            continue
+        if not path.is_file():
+            continue
+        rel_path = path.relative_to(REPO_ROOT).as_posix()
+        if rel_path in ALLOWLIST:
+            continue
+        content = path.read_text(encoding="utf-8", errors="ignore")
+        if PROHIBITED_SCHEMA_ID.search(content):
+            violations.append(f"schema:{rel_path}:blux-contract-id")
 
     assert not violations, "Boundary violation(s) detected:\n" + "\n".join(violations)
 
 FILE: tests/test_crypto.py
 Kind: text
 Size: 479
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 from blux_reg import config, crypto
@@ -3537,7 +2195,7 @@ def test_keygen_sign_verify(tmp_path, monkeypatch):
 FILE: tests/test_flow.py
 Kind: text
 Size: 1688
-Last modified: 2026-01-20T06:55:50Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 import json
@@ -3600,7 +2258,7 @@ def test_ledger_tamper_detection(tmp_path):
 FILE: tests/test_ledger.py
 Kind: text
 Size: 677
-Last modified: 2026-01-20T13:55:06Z
+Last modified: 2026-01-21T07:35:39Z
 
 CONTENT:
 import json
@@ -3628,8 +2286,8 @@ def test_ledger_chain_and_tamper(tmp_path, monkeypatch):
 
 FILE: tests/test_tokens.py
 Kind: text
-Size: 2346
-Last modified: 2026-01-20T13:55:06Z
+Size: 2356
+Last modified: 2026-01-21T07:55:25Z
 
 CONTENT:
 from datetime import datetime, timedelta, timezone
@@ -3650,7 +2308,7 @@ def test_token_validates(tmp_path, monkeypatch):
     token, token_hash, _ = tokens.issue_capability_token(
         "issuer",
         "publish",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         3600,
         {"scope": "release"},
     )
@@ -3663,7 +2321,7 @@ def test_token_expired_fails(tmp_path, monkeypatch):
     token, _, _ = tokens.issue_capability_token(
         "issuer",
         "publish",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         1,
         {},
     )
@@ -3677,7 +2335,7 @@ def test_token_revoked_fails(tmp_path, monkeypatch):
     token, token_hash, _ = tokens.issue_capability_token(
         "issuer",
         "publish",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         3600,
         {},
     )
@@ -3691,7 +2349,7 @@ def test_token_tampered_fails(tmp_path, monkeypatch):
     token, _, _ = tokens.issue_capability_token(
         "issuer",
         "publish",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         3600,
         {},
     )
@@ -3705,7 +2363,7 @@ def test_token_hash_roundtrip(tmp_path, monkeypatch):
     token, token_hash, path = tokens.issue_capability_token(
         "issuer",
         "deploy",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         3600,
         {},
     )
@@ -3713,170 +2371,238 @@ def test_token_hash_roundtrip(tmp_path, monkeypatch):
     now = datetime.now(timezone.utc).replace(microsecond=0)
     assert tokens.verify_capability_token(token, now=now)["status"] == "verified"
 
+FILE: tests/test_trust_store.py
+Kind: text
+Size: 1357
+Last modified: 2026-01-21T07:55:25Z
+
+CONTENT:
+from datetime import datetime, timezone
+
+from blux_reg import config, crypto, load_trust_store, revoke_token, save_trust_store, verify_token
+from blux_reg.trust_store import new_trust_anchor
+from blux_reg.tokens import issue_capability_token
+
+
+def _setup_key(tmp_path, monkeypatch):
+    monkeypatch.setenv("BLUX_REG_CONFIG_DIR", str(tmp_path))
+    config.refresh_paths()
+    crypto.generate_keypair("issuer")
+
+
+def test_trust_store_revocation(tmp_path, monkeypatch):
+    _setup_key(tmp_path, monkeypatch)
+    token, token_hash, _ = issue_capability_token(
+        "issuer",
+        "publish",
+        "outer-void/blux-example",
+        3600,
+        {},
+    )
+    store_path = tmp_path / "trust_store.jsonl"
+    store = load_trust_store(store_path)
+
+    public_key = crypto.load_public_key("issuer")
+    public_pem = crypto.export_key("issuer", public=True).decode("utf-8")
+    anchor = new_trust_anchor(crypto.fingerprint_public_key(public_key), public_pem)
+    store.add_entry(anchor)
+    save_trust_store(store_path, store)
+
+    result = verify_token(token, store_path, now=datetime.now(timezone.utc))
+    assert result["valid"] is True
+
+    revoke_token(token_hash, "compromised", store_path)
+    result = verify_token(token, store_path, now=datetime.now(timezone.utc))
+    assert result["valid"] is False
+    assert "revoked" in result["reason_codes"]
+
 ## 4) Workflow Inventory (index only)
-- .github/workflows/ci.yml: pull_request, push
+- .github/workflows/ci.yml: none
 
 ## 5) Search Index (raw results)
+
 subprocess:
-tests/test_boundary_ci.py
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 os.system:
-none
+./snapshot.md
 
 exec(:
-none
+./snapshot.md
 
 spawn:
-none
+./snapshot.md
 
 shell:
-none
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 child_process:
-none
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 policy:
-README.md
-ROLE.md
-scripts/physics_check.sh
-tests/test_boundary_ci.py
+./README.md
+./docs/roles.md
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 ethic:
-scripts/physics_check.sh
-tests/test_boundary_ci.py
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 enforce:
-plan.md
+./README.md
+./ROLE.md
+./docs/roles.md
+./plan.md
+./snapshot.md
 
 guard:
-README.md
-docs/CONTRACT.md
-plan.md
-scripts/physics_check.sh
-tests/test_tokens.py
+./README.md
+./plan.md
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 receipt:
-scripts/physics_check.sh
+./README.md
+./docs/roles.md
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 token:
-README.md
-ROLE.md
-blux_reg/__init__.py
-blux_reg/cli.py
-blux_reg/paths.py
-blux_reg/tokens.py
-docs/CONTRACT.md
-docs/roles.md
-schemas/capability_manifest.schema.json
-schemas/capability_token.schema.json
-schemas/revocation.schema.json
-scripts/physics_check.sh
-src/blux_reg/__init__.py
-src/blux_reg/cli.py
-src/blux_reg/config.py
-src/blux_reg/tokens.py
-tests/test_tokens.py
+./README.md
+./ROLE.md
+./docs/CONTRACT.md
+./docs/roles.md
+./schemas/capability_manifest.schema.json
+./schemas/capability_token.schema.json
+./schemas/revocation.schema.json
+./scripts/demo_unified_reg.sh
+./snapshot.md
+./src/blux_reg/__init__.py
+./src/blux_reg/api.py
+./src/blux_reg/cli.py
+./src/blux_reg/config.py
+./src/blux_reg/tokens.py
+./src/blux_reg/trust_store.py
+./tests/test_tokens.py
+./tests/test_trust_store.py
 
 signature:
-README.md
-blux_reg/cli.py
-blux_reg/crypto.py
-blux_reg/paths.py
-blux_reg/registry.py
-blux_reg/tokens.py
-docs/CONTRACT.md
-docs/roles.md
-plan.md
-schemas/capability_token.schema.json
-src/blux_reg/crypto.py
-src/blux_reg/manifest.py
-src/blux_reg/tokens.py
-tests/test_crypto.py
-tests/test_tokens.py
+./README.md
+./docs/CONTRACT.md
+./plan.md
+./schemas/capability_token.schema.json
+./snapshot.md
+./src/blux_reg/api.py
+./src/blux_reg/crypto.py
+./src/blux_reg/manifest.py
+./src/blux_reg/tokens.py
+./tests/test_crypto.py
+./tests/test_tokens.py
 
 verify:
-README.md
-blux_reg/__init__.py
-blux_reg/cli.py
-blux_reg/crypto.py
-blux_reg/ledger.py
-blux_reg/registry.py
-blux_reg/tokens.py
-docs/CONTRACT.md
-scripts/demo_unified_reg.sh
-src/blux_reg/cli.py
-src/blux_reg/crypto.py
-src/blux_reg/ledger.py
-src/blux_reg/manifest.py
-src/blux_reg/tokens.py
-tests/test_crypto.py
-tests/test_flow.py
-tests/test_ledger.py
-tests/test_tokens.py
+./README.md
+./docs/CONTRACT.md
+./scripts/demo_unified_reg.sh
+./snapshot.md
+./src/blux_reg/__init__.py
+./src/blux_reg/api.py
+./src/blux_reg/cli.py
+./src/blux_reg/crypto.py
+./src/blux_reg/ledger.py
+./src/blux_reg/manifest.py
+./src/blux_reg/tokens.py
+./src/blux_reg/trust_store.py
+./tests/test_crypto.py
+./tests/test_flow.py
+./tests/test_ledger.py
+./tests/test_tokens.py
+./tests/test_trust_store.py
 
 capability:
-README.md
-ROLE.md
-blux_reg/__init__.py
-blux_reg/cli.py
-blux_reg/tokens.py
-docs/CONTRACT.md
-docs/roles.md
-schemas/capability_manifest.schema.json
-schemas/capability_token.schema.json
-src/blux_reg/cli.py
-src/blux_reg/tokens.py
-tests/test_tokens.py
+./README.md
+./ROLE.md
+./docs/CONTRACT.md
+./docs/roles.md
+./schemas/capability_manifest.schema.json
+./schemas/capability_token.schema.json
+./snapshot.md
+./src/blux_reg/api.py
+./src/blux_reg/cli.py
+./src/blux_reg/tokens.py
+./tests/test_tokens.py
+./tests/test_trust_store.py
 
 key_id:
-README.md
-blux_reg/cli.py
-blux_reg/crypto.py
-blux_reg/keystore.py
-blux_reg/registry.py
-blux_reg/tokens.py
-docs/CONTRACT.md
+./snapshot.md
 
 contract:
-LICENSE-APACHE
-docs/CONTRACT.md
-docs/roles.md
-plan.md
-scripts/physics_check.sh
+./LICENSE-APACHE
+./README.md
+./docs/CONTRACT.md
+./docs/roles.md
+./plan.md
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 schema:
-blux_reg/tokens.py
-docs/CONTRACT.md
-schemas/capability_manifest.schema.json
-schemas/capability_token.schema.json
-schemas/revocation.schema.json
-scripts/physics_check.sh
-src/blux_reg/manifest.py
-src/blux_reg/tokens.py
+./README.md
+./docs/CONTRACT.md
+./schemas/capability_manifest.schema.json
+./schemas/capability_token.schema.json
+./schemas/revocation.schema.json
+./snapshot.md
+./src/blux_reg/api.py
+./src/blux_reg/manifest.py
+./src/blux_reg/tokens.py
+./src/blux_reg/trust_store.py
+./tests/test_boundary_ci.py
 
 $schema:
-schemas/capability_manifest.schema.json
-schemas/capability_token.schema.json
-schemas/revocation.schema.json
+./schemas/capability_manifest.schema.json
+./schemas/capability_token.schema.json
+./schemas/revocation.schema.json
+./snapshot.md
 
 json-schema:
-schemas/capability_manifest.schema.json
-schemas/capability_token.schema.json
-schemas/revocation.schema.json
+./schemas/capability_manifest.schema.json
+./schemas/capability_token.schema.json
+./schemas/revocation.schema.json
+./snapshot.md
 
 router:
-none
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 orchestr:
-README.md
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 execute:
-LICENSE-APACHE
-docs/roles.md
+./LICENSE-APACHE
+./README.md
+./docs/roles.md
+./scripts/physics_check.sh
+./snapshot.md
+./tests/test_boundary_ci.py
 
 command:
-scripts/demo_unified_reg.sh
-src/blux_reg/cli.py
+./scripts/demo_unified_reg.sh
+./snapshot.md
+./src/blux_reg/cli.py
 
 ## 6) Notes
 none
