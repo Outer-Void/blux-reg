@@ -28,6 +28,7 @@ LEDGER_PATH = TRUST_DIR / "ledger.jsonl"
 CACHE_DIR = CONFIG_ROOT / "cache"
 TOKENS_DIR = TRUST_DIR / "tokens"
 REVOCATIONS_PATH = TRUST_DIR / "token_revocations.jsonl"
+TRUST_STORE_PATH = TRUST_DIR / "trust_store.jsonl"
 
 
 def refresh_paths() -> None:
@@ -36,6 +37,7 @@ def refresh_paths() -> None:
     Useful for tests that temporarily override ``BLUX_REG_CONFIG_DIR``.
     """
     global CONFIG_ROOT, KEYS_DIR, MANIFEST_DIR, TRUST_DIR, LEDGER_PATH, CACHE_DIR, TOKENS_DIR, REVOCATIONS_PATH
+    global TRUST_STORE_PATH
     CONFIG_ROOT = _resolve_root()
     KEYS_DIR = CONFIG_ROOT / "keys"
     MANIFEST_DIR = CONFIG_ROOT / "manifests"
@@ -44,6 +46,7 @@ def refresh_paths() -> None:
     CACHE_DIR = CONFIG_ROOT / "cache"
     TOKENS_DIR = TRUST_DIR / "tokens"
     REVOCATIONS_PATH = TRUST_DIR / "token_revocations.jsonl"
+    TRUST_STORE_PATH = TRUST_DIR / "trust_store.jsonl"
 
 
 def ensure_directories() -> None:

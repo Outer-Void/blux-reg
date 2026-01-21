@@ -1,28 +1,37 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-forbidden_pattern='safety policy|\b(ethic|morality|discern|posture|illusion|therapy|harm)\b'
-if rg -n -i --hidden --glob '!.git/*' "$forbidden_pattern" .; then
-  echo "Physics check failed: forbidden policy/discernment tokens detected."
+code_globs=(
+  --glob "src/**"
+  --glob "tests/**"
+  --glob "scripts/**"
+  --glob "bin/**"
+  --glob "!scripts/physics_check.sh"
+  --glob "!tests/test_boundary_ci.py"
+  --glob "!**/__pycache__/**"
+)
+
+execution_pattern='\bsubprocess\b|os\.system|\bexec\(|\bshell\b|\bchild_process\b'
+role_pattern='guard_receipt|discernment_report|\bexecute\b|\brouter\b|\borchestr|\bpolicy\b|\bethic|\bquantum\b|\bdoctrine\b|\blite\b'
+
+if rg -n -i --hidden "${code_globs[@]}" "$execution_pattern" .; then
+  echo "Physics check failed: execution primitives detected in code."
   exit 1
 fi
 
-phase0_paths=(
-  "contracts/envelope.schema.json"
-  "contracts/request.schema.json"
-  "contracts/discernment_report.schema.json"
-  "contracts/guard_receipt.schema.json"
-  "schemas/envelope.schema.json"
-  "schemas/request.schema.json"
-  "schemas/discernment_report.schema.json"
-  "schemas/guard_receipt.schema.json"
-)
+if rg -n -i --hidden "${code_globs[@]}" "$role_pattern" .; then
+  echo "Physics check failed: prohibited role keywords detected in code."
+  exit 1
+fi
 
-for path in "${phase0_paths[@]}"; do
-  if [[ -e "$path" ]]; then
-    echo "Physics check failed: Phase 0 contract schema detected at $path."
-    exit 1
-  fi
-done
+if [[ -d "contracts" ]]; then
+  echo "Physics check failed: contracts directory detected."
+  exit 1
+fi
+
+if rg -n --hidden "\\$id\s*:\s*\"blux://contracts/" .; then
+  echo "Physics check failed: canonical contract identifiers detected."
+  exit 1
+fi
 
 echo "Physics check passed."

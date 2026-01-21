@@ -144,7 +144,12 @@ def revoke_capability_token(token_hash: str, reason: str, revoker: str) -> Dict[
     return entry
 
 
-def verify_capability_token(token: Dict[str, Any], now: Optional[datetime] = None) -> Dict[str, str]:
+def verify_capability_token(
+    token: Dict[str, Any],
+    now: Optional[datetime] = None,
+    trust_anchors: Optional[set[str]] = None,
+    revoked_tokens: Optional[set[str]] = None,
+) -> Dict[str, str]:
     missing = REQUIRED_FIELDS - token.keys()
     if missing:
         raise ValueError(f"Token missing fields: {sorted(missing)}")
@@ -161,12 +166,19 @@ def verify_capability_token(token: Dict[str, Any], now: Optional[datetime] = Non
     message = canonical_json(payload).encode()
     if not crypto.verify_signature(public_key, message, token["signature"]):
         raise ValueError("Token signature verification failed")
+    if trust_anchors is not None:
+        issuer_fingerprint = issuer.get("fingerprint")
+        if not issuer_fingerprint or issuer_fingerprint not in trust_anchors:
+            raise ValueError("Token issuer not trusted")
     now_dt = now or datetime.now(timezone.utc).replace(microsecond=0)
     expires_at = _parse_iso(payload["expires_at"])
     if expires_at < now_dt:
         raise ValueError("Token has expired")
     token_hash = token_ref(token)
-    if is_token_revoked(token_hash):
+    if revoked_tokens is not None:
+        if token_hash in revoked_tokens:
+            raise ValueError("Token has been revoked")
+    elif is_token_revoked(token_hash):
         raise ValueError("Token has been revoked")
     return {
         "status": "verified",

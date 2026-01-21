@@ -1,12 +1,14 @@
-# BLUX Reg Contract
+# BLUX-Reg Contract
 
-This document specifies the public contract for the unified BLUX registry demo. Paths, schemas, and the append-only audit rules are stable and versioned at `schema_version: 1.0`.
+This document specifies the public contract for the BLUX-Reg trust kernel. Token schema, trust-store format, and append-only audit rules are stable at `schema_version: 1.0`.
 
 ## Default paths
 - Config root: `~/.config/blux-reg/` (override with `BLUX_REG_CONFIG_DIR`)
 - Keys: `~/.config/blux-reg/keys/`
 - Manifests: `~/.config/blux-reg/manifests/`
 - Ledger: `~/.config/blux-reg/trust/ledger.jsonl`
+- Trust store: `~/.config/blux-reg/trust/trust_store.jsonl`
+- Token revocations: `~/.config/blux-reg/trust/token_revocations.jsonl`
 - Cache/temp: `~/.config/blux-reg/cache/` (safe to clear, never used for trust state)
 
 ## Key material
@@ -39,18 +41,14 @@ This document specifies the public contract for the unified BLUX registry demo. 
   "expires_at": "2025-01-02T00:00:00+00:00",
   "ttl_seconds": 86400,
   "capability": "publish",
-  "audience_repo": "Outer-Void/blux-guard",
+  "audience": "outer-void/blux-example",
   "constraints": {
     "scope": "release"
   },
   "issuer": {
-    "key_id": "project-alpha",
-    "key_type": "project",
-    "public_key": "<base64 ed25519 public key>",
-    "compatibility": {
-      "BLUX-Quantum": ">=1.0",
-      "BLUX-Guard": ">=1.0"
-    }
+    "key_name": "issuer",
+    "fingerprint": "<sha256 raw public key>",
+    "public_key": "<pem ed25519 public key>"
   },
   "signature": "<base64 ed25519 signature over canonical token payload>"
 }
@@ -60,31 +58,33 @@ This document specifies the public contract for the unified BLUX registry demo. 
 - Token hash (`capability_token_ref`): SHA-256 of canonical JSON including the signature.
 - Tokens are offline-verifiable, scoped, and time-bound. Secrets must not be embedded in tokens.
 
-### Token ledger entry (append-only)
+## Trust store schema (JSONL, append-only)
+Each line is canonical JSON with sorted keys. Entries are chained with `prev_hash` and `entry_hash`.
+
+### Trust anchor entry
 ```json
 {
-  "timestamp": "2025-01-01T00:00:00+00:00",
-  "issuer": "project-alpha",
-  "role": "project",
-  "token_hash": "<sha256 canonical token JSON>",
-  "payload": "<token payload without signature>",
-  "signature": "<base64 signature over payload>"
+  "schema_version": "1.0",
+  "entry_type": "trust_anchor",
+  "added_at": "2025-01-01T00:00:00+00:00",
+  "fingerprint": "<sha256 raw public key>",
+  "public_key": "<pem ed25519 public key>",
+  "source": "local",
+  "prev_hash": null,
+  "entry_hash": "<sha256 hash of entry without entry_hash>"
 }
 ```
 
-### Token revocation entry (append-only)
+### Token revocation entry
 ```json
 {
-  "timestamp": "2025-01-01T00:00:00+00:00",
-  "issuer": "security-team",
-  "role": "revocation",
-  "payload": {
-    "event": "token_revoked",
-    "timestamp": "2025-01-01T00:00:00+00:00",
-    "token_hash": "<sha256 canonical token JSON>",
-    "reason": "compromised",
-    "revoker": "security-team"
-  }
+  "schema_version": "1.0",
+  "entry_type": "token_revocation",
+  "revoked_at": "2025-01-01T00:00:00+00:00",
+  "token_hash": "<sha256 canonical token JSON>",
+  "reason": "compromised",
+  "prev_hash": "<previous entry hash>",
+  "entry_hash": "<sha256 hash of entry without entry_hash>"
 }
 ```
 
@@ -107,30 +107,11 @@ Required fields:
 ### Allowed actions
 `keygen`, `key-import`, `sign`, `event`, `token-issue`, `token-revoke`, plus future actions that follow the schema above.
 
-## Envelope reference
-Artifacts that require delegated capabilities should reference tokens by hash:
-
-```json
-{
-  "capability_token_ref": "<sha256 hash of canonical token JSON>"
-}
-```
-
 ## CLI contract
 - `blux-reg init` — create config dirs
-- `blux-reg status [--json]`
-- `blux-reg keygen [--name NAME] [--force]`
-- `blux-reg key list`
-- `blux-reg key export --name NAME [--public/--private] [--output FILE]`
-- `blux-reg key import PATH [--name NAME]`
-- `blux-reg sign <artifact> [--key-name NAME] [--output FILE]`
-- `blux-reg verify <manifest>`
-- `blux-reg audit add-event "message" [--actor FINGERPRINT]`
-- `blux-reg audit tail [-n N] [--json]`
-- `blux-reg audit verify-chain`
-- `blux-reg token issue <key_id> <key_type> <capability> <audience_repo> <ttl_seconds> [--constraints JSON]`
-- `blux-reg token verify <token_path>`
-- `blux-reg token revoke <token_hash> [--reason REASON] --revoker ID`
-- `blux-reg token show <token_path>`
+- `blux-reg issue <key_name> <capability> <audience> <ttl_seconds> [--constraints JSON]`
+- `blux-reg hash <token_path>`
+- `blux-reg verify <token_path>`
+- `blux-reg revoke <token_hash> [--reason REASON] [--revoker ID]`
 
 Exit codes are stable: `0` success, `1` on verification/chain failures.

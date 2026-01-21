@@ -1,5 +1,5 @@
 # ROLE
 
-BLUX-Reg is a trust kernel for capability tokens only: it issues, hashes, verifies, and revokes tokens offline.
+BLUX-Reg is a trust kernel for capability tokens, provenance, and revocation only.
 
-No policy decisions; no judgment logic; no execution.
+No execution, no routing, no enforcement, no judgment.

@@ -1,19 +1,19 @@
 # BLUX-Reg Role Definition
 
 ## What BLUX-Reg Does
-- Issues and verifies cryptographic signatures for artifacts, manifests, and capability tokens.
-- Maintains append-only ledgers for provenance, verification, and revocation records.
-- Performs local-first validation so artifacts can be verified offline without centralized services.
-- Tracks capability token references by deterministic hashes for delegation without sharing secrets.
+- Issues and verifies cryptographic capability tokens.
+- Maintains append-only provenance and revocation records.
+- Performs local-first verification so tokens can be validated offline.
+- Produces token artifacts and verification reports only.
 
 ## What BLUX-Reg Does **Not** Do
-- It does **not** make value judgments or governance decisions.
-- It does **not** perform human-like judgment or scoring.
-- It does **not** execute or deploy artifacts; it only signs and verifies.
-- It does **not** host, distribute, or mutate BLUX-ecosystem contracts.
+- It does **not** execute workloads or dispatch actions.
+- It does **not** enforce policy or issue authorization receipts.
+- It does **not** route requests or make judgments.
+- It does **not** copy canonical BLUX contracts.
 
 ## Contract Referencing
-BLUX-Reg references BLUX-ecosystem contracts by `$id` only. Contract definitions are **never** copied into this repository. When validation is needed, BLUX-Reg uses the `$id` to locate the authoritative contract in the upstream BLUX-ecosystem.
+BLUX-Reg references BLUX-ecosystem contracts by `blux://` identifier only. Contract definitions are **never** copied into this repository.
 
 ## Boundary Enforcement
-A boundary CI test scans tracked files for prohibited keywords and paths that would imply governance or scoring logic. The check is regex-based, documented in the test itself, and intentionally narrow to avoid false positives while still blocking prohibited functionality.
+Boundary checks scan code directories for prohibited execution, routing, or governance keywords and for copied contract identifiers. The checks are intentionally narrow and focus on code paths only.

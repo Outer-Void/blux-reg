@@ -16,7 +16,7 @@ def test_token_validates(tmp_path, monkeypatch):
     token, token_hash, _ = tokens.issue_capability_token(
         "issuer",
         "publish",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         3600,
         {"scope": "release"},
     )
@@ -29,7 +29,7 @@ def test_token_expired_fails(tmp_path, monkeypatch):
     token, _, _ = tokens.issue_capability_token(
         "issuer",
         "publish",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         1,
         {},
     )
@@ -43,7 +43,7 @@ def test_token_revoked_fails(tmp_path, monkeypatch):
     token, token_hash, _ = tokens.issue_capability_token(
         "issuer",
         "publish",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         3600,
         {},
     )
@@ -57,7 +57,7 @@ def test_token_tampered_fails(tmp_path, monkeypatch):
     token, _, _ = tokens.issue_capability_token(
         "issuer",
         "publish",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         3600,
         {},
     )
@@ -71,7 +71,7 @@ def test_token_hash_roundtrip(tmp_path, monkeypatch):
     token, token_hash, path = tokens.issue_capability_token(
         "issuer",
         "deploy",
-        "outer-void/blux-guard",
+        "outer-void/blux-example",
         3600,
         {},
     )
