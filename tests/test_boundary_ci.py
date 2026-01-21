@@ -10,13 +10,23 @@ PROHIBITED_CONTENT_PATTERNS = [
     re.compile(r"\bexec\(", re.IGNORECASE),
     re.compile(r"\bshell\b", re.IGNORECASE),
     re.compile(r"\bchild_process\b", re.IGNORECASE),
+    re.compile(r"\bblux_ca\b", re.IGNORECASE),
+    re.compile(r"\bblux_guard\b", re.IGNORECASE),
+    re.compile(r"\bblux_lite\b", re.IGNORECASE),
+    re.compile(r"\bblux_quantum\b", re.IGNORECASE),
+    re.compile(r"\bblux_doctrine\b", re.IGNORECASE),
     re.compile(r"guard_receipt", re.IGNORECASE),
     re.compile(r"discernment_report", re.IGNORECASE),
     re.compile(r"\bexecute\b", re.IGNORECASE),
     re.compile(r"\brouter\b", re.IGNORECASE),
     re.compile(r"\borchestr", re.IGNORECASE),
     re.compile(r"\bpolicy\b", re.IGNORECASE),
+    re.compile(r"\bposture\b", re.IGNORECASE),
     re.compile(r"\bethic", re.IGNORECASE),
+    re.compile(r"\benforce\b", re.IGNORECASE),
+    re.compile(r"\ballow\b[^\n]{0,50}\bintent\b", re.IGNORECASE),
+    re.compile(r"\bdeny\b[^\n]{0,50}\bintent\b", re.IGNORECASE),
+    re.compile(r"doctrine[^\n]{0,50}engine", re.IGNORECASE),
     re.compile(r"\bquantum\b", re.IGNORECASE),
     re.compile(r"\bdoctrine\b", re.IGNORECASE),
     re.compile(r"\blite\b", re.IGNORECASE),
@@ -24,13 +34,23 @@ PROHIBITED_CONTENT_PATTERNS = [
 
 PROHIBITED_PATH_PATTERNS = [
     re.compile(r"contracts", re.IGNORECASE),
+    re.compile(r"\bblux_ca\b", re.IGNORECASE),
+    re.compile(r"\bblux_guard\b", re.IGNORECASE),
+    re.compile(r"\bblux_lite\b", re.IGNORECASE),
+    re.compile(r"\bblux_quantum\b", re.IGNORECASE),
+    re.compile(r"\bblux_doctrine\b", re.IGNORECASE),
     re.compile(r"guard_receipt", re.IGNORECASE),
     re.compile(r"discernment_report", re.IGNORECASE),
     re.compile(r"\bexecute\b", re.IGNORECASE),
     re.compile(r"\brouter\b", re.IGNORECASE),
     re.compile(r"\borchestr", re.IGNORECASE),
     re.compile(r"\bpolicy\b", re.IGNORECASE),
+    re.compile(r"\bposture\b", re.IGNORECASE),
     re.compile(r"\bethic", re.IGNORECASE),
+    re.compile(r"\benforce\b", re.IGNORECASE),
+    re.compile(r"\ballow\b[^\n]{0,50}\bintent\b", re.IGNORECASE),
+    re.compile(r"\bdeny\b[^\n]{0,50}\bintent\b", re.IGNORECASE),
+    re.compile(r"doctrine[^\n]{0,50}engine", re.IGNORECASE),
     re.compile(r"\bquantum\b", re.IGNORECASE),
     re.compile(r"\bdoctrine\b", re.IGNORECASE),
     re.compile(r"\blite\b", re.IGNORECASE),
@@ -64,6 +84,15 @@ def test_boundary_no_forbidden_logic_or_contracts():
 
     if (REPO_ROOT / "contracts").exists():
         violations.append("path:contracts:contracts-directory")
+    schema_files = []
+    for path in REPO_ROOT.rglob("*.schema.json"):
+        rel_parts = path.relative_to(REPO_ROOT).parts
+        if len(rel_parts) >= 2 and rel_parts[0] == "tests" and rel_parts[1] == "fixtures":
+            continue
+        schema_files.append(path)
+    for path in schema_files:
+        rel_path = path.relative_to(REPO_ROOT).as_posix()
+        violations.append(f"schema:{rel_path}:schema-file-outside-fixtures")
 
     for path, rel_path in _iter_code_files():
         for pattern in PROHIBITED_PATH_PATTERNS:

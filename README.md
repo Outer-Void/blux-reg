@@ -11,14 +11,15 @@
 
 ## 🎯 Overview
 
-BLUX-Reg is the **engine-free trust kernel** for the BLUX ecosystem. It issues and verifies capability tokens, maintains append-only provenance records, and manages revocations for offline verification. It does **not** execute work, enforce policy, route requests, or judge outcomes.
+BLUX-Reg is the **engine-free trust kernel** for the BLUX ecosystem. It issues and verifies capability tokens and capability token references, maintains append-only provenance records, and manages revocations for offline verification. It does **not** execute work, enforce policy, route requests, or judge outcomes.
 
 **Scope guarantees:**
-- ✅ Issues/verifies capability tokens and verification reports.
+- ✅ Issues/verifies capability tokens, token references, and verification reports.
 - ✅ Maintains append-only provenance and revocation data.
 - ❌ Does not execute, enforce, route, or judge.
+- ❌ Does not perform policy, discernment, enforcement, orchestration, or execution.
 - ❌ Does not emit guard receipts or authorization decisions.
-- ❌ Does not copy canonical contracts (references `blux://` IDs only).
+- ❌ Does not copy canonical contracts (references `blux://` IDs only from the blux-ecosystem).
 
 **Outputs are limited to:** token artifacts and verification reports (no receipts).
 
